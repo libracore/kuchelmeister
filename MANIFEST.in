@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include kuchelmeister *.css
+recursive-include kuchelmeister *.csv
+recursive-include kuchelmeister *.html
+recursive-include kuchelmeister *.ico
+recursive-include kuchelmeister *.js
+recursive-include kuchelmeister *.json
+recursive-include kuchelmeister *.md
+recursive-include kuchelmeister *.png
+recursive-include kuchelmeister *.py
+recursive-include kuchelmeister *.svg
+recursive-include kuchelmeister *.txt
+recursive-exclude kuchelmeister *.pyc
