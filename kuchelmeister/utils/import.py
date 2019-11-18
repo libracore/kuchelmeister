@@ -112,6 +112,7 @@ def import_sinv_pos(f):
     RATE = 3
     INCOME = 4
     KST = 5
+    DESCRIPTION = 6
     # clear all records
     print("WARNING: clearing all sales invoice items")
     frappe.db.sql("""DELETE FROM `tabSales Invoice Item` WHERE `name` LIKE '%';""")
@@ -129,6 +130,7 @@ def import_sinv_pos(f):
                 i = frappe.get_doc("Item", item)
                 income = row[INCOME]
                 kst = row[KST]
+                description = row[DESCRIPTION]
                 sql = """INSERT INTO `tabSales Invoice Item` 
                     (`name`, `parent`, `parentfield`, `parenttype`, 
                     `item_code`, `qty`, `rate`,
@@ -138,7 +140,7 @@ def import_sinv_pos(f):
                     '{item_name}', '{description}', '{uom}', '{income}', '{kst}');""".format(
                     name=uuid.uuid4().hex, parent=parent, 
                     item_code=item, qty=qty, rate=rate,
-                    item_name=i.item_name, description=i.description, uom=i.stock_uom, income=income, kst=kst)
+                    item_name=i.item_name, description=description, uom=i.stock_uom, income=income, kst=kst)
                 print(sql)
                 print("Creating item {0} for sales invoice {1}".format(item, parent))
                 frappe.db.sql(sql)
