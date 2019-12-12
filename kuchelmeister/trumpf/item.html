@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PPSImport Version="1.1">
+ <Items>
+  <Item IdentNo="{{ trumpf_item_code }}">
+    <IdentNoExt>{{ item_code }}</IdentNoExt>
+    <Description>{{ description }}</Description>
+    <Category>{{ item_group }}</Category>
+    {%- if material %}
+    <Material>{{ material }}</Material>
+    {%- endif %}
+    <StockUnit>{{ default_uom }}</StockUnit>
+    {%- if documents %}
+    <DocumentsLinkedToPart>
+        {%- for document in documents %}
+        <Document>
+            <Path>{{ document.url }}</Path>
+            <Title>{{ document.name }}</Title>
+            <Description>{{ document.name }}</Description>
+            <Version>1.0</Version>
+            <Status>20</Status><!-- 20: valid, 70: locked -->
+            <SaveDocumentToArchive>False</SaveDocumentToArchive>
+        </Document>
+        {%- endfor %}
+    </DocumentsLinkedToPart>
+    {%- endif %}
+    {%- if prices %}
+    <PriceLists>
+        {%- for price in prices %}
+        <Pricelist>
+            <Name>{{ price.pricelist }}</Name>
+            {-% if price.selling %}
+            <Type>20</Type>
+            {-% else %}
+            <Type>10</Type>
+            {%- endif %}
+            <ValidFrom>01.01.2019 00:00</ValidFrom>
+            <ScalePrices>
+                <ScalePrice>
+                    <Quantity>0</Quantity>
+                    <Unit>Stk</Unit>
+                    <Price>{{ price.rate }}</Price>
+                </ScalePrice>
+            </ScalePrices>
+        </Pricelist>
+        {%- endfor %}
+    </PriceLists>
+    {%- endif %}
+  </Item>
+ </Items>
+</PPSImport>

@@ -1,0 +1,45 @@
+{
+ "creation": "2019-12-12 17:28:31.027645",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_file_exchange",
+  "pyhsical_path"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_file_exchange",
+   "fieldtype": "Section Break",
+   "label": "File exchange"
+  },
+  {
+   "description": "Physical exchange path, like \\var\\share\\trumpf",
+   "fieldname": "pyhsical_path",
+   "fieldtype": "Data",
+   "label": "Physical path"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2019-12-12 17:28:34.477621",
+ "modified_by": "Administrator",
+ "module": "Kuchelmeister",
+ "name": "Trumpf Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
