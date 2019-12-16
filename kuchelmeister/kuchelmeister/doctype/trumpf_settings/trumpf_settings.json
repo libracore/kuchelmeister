@@ -14,6 +14,7 @@
    "label": "File exchange"
   },
   {
+   "default": "\\var\\share\\trumpf",
    "description": "Physical exchange path, like \\var\\share\\trumpf",
    "fieldname": "pyhsical_path",
    "fieldtype": "Data",
@@ -21,7 +22,7 @@
   }
  ],
  "issingle": 1,
- "modified": "2019-12-12 17:28:34.477621",
+ "modified": "2019-12-16 12:12:08.211696",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Trumpf Settings",

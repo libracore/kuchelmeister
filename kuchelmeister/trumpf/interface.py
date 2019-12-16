@@ -9,6 +9,7 @@ import cgi              # for xml escaping
 import hashlib          # for md5 hashes
 from frappe.desk.form.load import get_attachments
 
+@frappe.whitelist()
 def write_item(item_code):
     item = frappe.get_doc("Item", item)
     target_path = frappe.get_value("Trumpf Settings", "Trumpf Settings", "physical_path", ignore_permissions=True)
