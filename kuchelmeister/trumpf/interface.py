@@ -83,7 +83,7 @@ def write_production_order(sales_order_name):
     # collect items
     items = []
     for i in sales_order.items:
-        item_record = frappe.get_doc("Item", i)
+        item_record = frappe.get_doc("Item", i.item_code)
         if item_record.trumpf_fab_opened == 1 and item_record.trumpf_item_code:
             if item_record.material:
                 material = cgi.escape(item_record.material)
@@ -97,11 +97,12 @@ def write_production_order(sales_order_name):
                 'item_code': item_record.item_code,
                 'item_name': cgi.escape(item_record.item_name),
                 'trumpf_item_code': item_record.trumpf_item_code,
-                'qty': item_record.qty,
+                'qty': i.qty,
                 'drawing_no': drawing_no,
-                'material': material
+                'material': material,
+                'order_code': "{0}/{1}".format(sales_order_name, i.idx)
             })            
-    attachments = get_attachments(dt="Item", dn=item_code)
+    attachments = get_attachments(dt="Sales Order", dn=sales_order_name)
     if attachments and len(attachments) > 0:
         documents = []
         for attachment in attachments:
@@ -117,15 +118,15 @@ def write_production_order(sales_order_name):
         'customer': sales_order.customer,
         'customer_name': cgi.escape(sales_order.customer_name),
         'sales_order': sales_order.name,
-        'items': items
+        'items': items,
+        'delivery_date': "{day:2d}.{month:2d}.{year:4d} 00:00".format(
+            day=sales_order.delivery_date.day,
+            month=sales_order.delivery_date.month,
+            year=sales_order.delivery_date.year)
     }
-    content = frappe.render_template('kuchelmeister/trumpf/item.html', data)
-    file = codecs.open("{path}MasterDataImp{item_code}.xml".format(path=target_path,
-        item_code=item_code), "w", "utf-8")
+    content = frappe.render_template('kuchelmeister/trumpf/production_order.html', data)
+    file = codecs.open("{path}ProdOrderImp{sales_order}.xml".format(path=target_path,
+        sales_order=sales_order_name), "w", "utf-8")
     file.write(content)
     file.close()
-    # update item
-    item.trumpf_fab_opened = 1                  # mark as exported
-    item.trumpf_item_code = trumpf_item_code    # store Trumpf item code
-    item.save()
     return
