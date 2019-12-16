@@ -1,0 +1,42 @@
+l<?xml version="1.0" encoding="utf-8"?>
+<PPSImport Version="1.1">
+ <ProductionOrders>
+  {%- for item in items %}
+  <ProductionOrder OrderNo="{{ item.order_code }}">
+    {%- if po_no %}
+    <CustomerOrderNo>{{ po_no }}</CustomerOrderNo>
+    {%- endif %}
+    <CustomerName>{{ customer_name }}</CustomerName>
+    <CustomerNo>{{ customer }}</CustomerNo>
+    <OrderNoExt>{{ sales_order }}</OrderNoExt>
+    <PartNo>{{ item.trumpf_item_code }}</PartNo>
+    <PartNoExt>{{ item.item_code }}</PartNoExt>
+    <PartDescription>{{ item.item_name }}</PartDescription>
+    {%- if item.drawing_no %}
+    <DrawingNo>{{ item.drawing_no }}</DrawingNo>
+    {%- endif %}
+    <DueDate>{{ delivery_date }}</DueDate>
+    <DesiredQuantity>{{ item.qty }}</DesiredQuantity>
+    {%- if item.material %}
+    <Material>{{ item.material }}</Material>
+    {%- endif %}
+    <PriorityLevel>5</PriorityLevel>
+    <Status>20</Status>
+    {%- if documents %}
+    <DocumentsLinkedToOrder>
+        {%- for document in documents %}
+        <Document>
+            <Path>{{ document.url }}</Path>
+            <Title>{{ document.name }}</Title>
+            <Description>{{ document.name }}</Description>
+            <Version>1.0</Version>
+            <Status>20</Status>
+            <SaveDocumentToArchive>False</SaveDocumentToArchive>
+        </Document>
+        {%- endfor %}
+    </DocumentsLinkedToPart>
+    {%- endif %}
+  </ProductionOrder>
+  {%- endfor %}
+ </ProductionOrders>
+</PPSImport>

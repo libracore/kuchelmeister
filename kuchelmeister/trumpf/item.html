@@ -14,10 +14,10 @@
         {%- for document in documents %}
         <Document>
             <Path>{{ document.url }}</Path>
-            <Title>{{ document.name }}</Title>
-            <Description>{{ document.name }}</Description>
+            <Title>{{ document.filename }}</Title>
+            <Description>{{ document.filename }}</Description>
             <Version>1.0</Version>
-            <Status>20</Status><!-- 20: valid, 70: locked -->
+            <Status>20</Status>
             <SaveDocumentToArchive>False</SaveDocumentToArchive>
         </Document>
         {%- endfor %}
@@ -28,9 +28,9 @@
         {%- for price in prices %}
         <Pricelist>
             <Name>{{ price.pricelist }}</Name>
-            {-% if price.selling %}
+            {%- if price.selling %}
             <Type>20</Type>
-            {-% else %}
+            {%- else %}
             <Type>10</Type>
             {%- endif %}
             <ValidFrom>01.01.2019 00:00</ValidFrom>

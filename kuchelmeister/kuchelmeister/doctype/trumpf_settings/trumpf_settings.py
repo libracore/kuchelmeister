@@ -7,4 +7,10 @@ from __future__ import unicode_literals
 from frappe.model.document import Document
 
 class TrumpfSettings(Document):
-	pass
+    def validate(self):
+        # make sure path is unix-type
+        self.physical_path = self.physical_path.replace("\\", "/")
+        # make sure path is ending with a dash
+        if not self.physical_path.endswith("/"):
+            self.physical_path += "/"
+        return

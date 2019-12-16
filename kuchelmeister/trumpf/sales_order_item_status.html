@@ -1,0 +1,9 @@
+<table style="width: 100%; ">
+    {% for item in items %}
+    <tr>
+      <td>{{ item.item_code }}</td>
+      <td>{{ item.item_name }}</td>
+      <td>{{ item.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
