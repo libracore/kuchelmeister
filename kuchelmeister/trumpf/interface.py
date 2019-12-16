@@ -30,7 +30,7 @@ def write_item(item_code):
         documents = None
     data = {
         'item_code': cgi.escape(item_code),
-        'trumpf_item_code': trumpf_item_code
+        'trumpf_item_code': trumpf_item_code,
         'description': cgi.escape(item.description),
         'item_group': cgi.escape(item.item_group),
         'material': material,
