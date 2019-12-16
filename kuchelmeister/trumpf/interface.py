@@ -11,8 +11,9 @@ from frappe.desk.form.load import get_attachments
 
 @frappe.whitelist()
 def write_item(item_code):
-    item = frappe.get_doc("Item", item)
-    target_path = frappe.get_value("Trumpf Settings", "Trumpf Settings", "physical_path", ignore_permissions=True)
+    item = frappe.get_doc("Item", item_code)
+    settings = frappe.get_doc("Trumpf Settings")
+    target_path = settings.physical_path
     # create a unique item code, limited to 21 characters based on md5 hash
     trumpf_item_code = hashlib.md5(item_code.encode('utf-8')).hexdigest()[:21]
     if item.material:

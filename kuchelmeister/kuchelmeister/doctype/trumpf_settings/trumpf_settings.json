@@ -5,7 +5,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_file_exchange",
-  "pyhsical_path"
+  "physical_path"
  ],
  "fields": [
   {
@@ -16,13 +16,13 @@
   {
    "default": "\\var\\share\\trumpf",
    "description": "Physical exchange path, like \\var\\share\\trumpf",
-   "fieldname": "pyhsical_path",
+   "fieldname": "physical_path",
    "fieldtype": "Data",
    "label": "Physical path"
   }
  ],
  "issingle": 1,
- "modified": "2019-12-16 12:12:08.211696",
+ "modified": "2019-12-16 14:52:19.260135",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Trumpf Settings",
