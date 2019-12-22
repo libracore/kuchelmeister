@@ -259,8 +259,8 @@ def update_customers(f):
         for row in csv_reader:
           print(row)
           if counter > 0:
-            customer = "K-{0:5d}".format(int(row[CUSTOMER].strip()))
-            customer_name = row[CUSTOMER_NANE].strip()
+            customer = "K-{0:05d}".format(int(row[CUSTOMER].strip()))
+            customer_name = row[CUSTOMER_NAME].strip()
             description = "{0}, {1} {2}, {3}".format(row[STREET], row[PINCODE], row[CITY], row[PHONE])
 
             if not frappe.db.exists("Customer", customer):
@@ -268,6 +268,7 @@ def update_customers(f):
                 new_customer = frappe.get_doc({
                     'doctype': 'Customer',
                     'name': customer,
+                    'customer_details': customer,
                     'customer_name': customer_name,
                     'customer_group': 'Alle Kundengruppen',
                     'territory': 'CH',
