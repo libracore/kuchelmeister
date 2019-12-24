@@ -10,10 +10,10 @@ from frappe.model.document import Document
 def create__dn_pdf(label_printer, delivery_note):
     # create temporary file
     fname = os.path.join("/tmp", "frappe-pdf-{0}.pdf".format(frappe.generate_hash()))
-    
-    options = { 
-        'page-width': '{0}mm'.format(label_printer.width), 
-        'page-height': '{0}mm'.format(label_printer.height), 
+
+    options = {
+        'page-width': '{0}mm'.format(label_printer.width),
+        'page-height': '{0}mm'.format(label_printer.height),
         'margin-top': '0mm',
         'margin-bottom': '0mm',
         'margin-left': '0mm',
@@ -37,21 +37,22 @@ def create__dn_pdf(label_printer, delivery_note):
         'items': items
     }
     html_content = frappe.render_template('kuchelmeister/templates/labels/dn_label.html', data)
-    
     pdfkit.from_string(html_content, fname, options=options or {})
-    
     with open(fname, "rb") as fileobj:
         filedata = fileobj.read()
-    
     cleanup(fname)
-    
     return filedata
+
+def cleanup(fname):
+    if os.path.exists(fname):
+        os.remove(fname)
+    return
 
 @frappe.whitelist()
 def download_label(label_reference, dn, name=None, dt="Delivery Note"):
     label = frappe.get_doc("Label Printer", label_reference)
     frappe.local.response.filename = "{name}.pdf".format(name=(name or label_reference.replace(" ", "-").replace("/", "-")))
-    if (type == "Delivery Note"):
+    if dt == "Delivery Note":
         frappe.local.response.filecontent = create__dn_pdf(label, dn)
     else:
         frappe.local.response.filecontent = "Invalid output type"
