@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-	<html>
-	<head>
-		<meta charset="utf-8">
-	</head>
-	<body>
-	{% for item in items %}
-<table style="width: 61mm !important; margin: 0px !important; padding: 0px !important;">
-<tr>
-<td style=\"font-size: 7pt  !important;">"
-<p><br></p><p>{{ customer }}<br></p>
-<p><strong>{{ item.item_name }}<br></p>
-<p>Plan Nr.: {{ item.drawing_no }}</strong><br>Auftragsnr.: {{ item.against_sales_order }}<br>I. Bestell-N.: {{ po_no }}<br></p>
-</td>
-<td style=\"font-size: 7pt  !important;\">
-<p><br></p><p><img src=\"https://kuchelmeister.ch/images/content/kuchelmeister/Logo-Kuchelmeister.jpg\" style=\"width: 60px !important; \"><br></p>
-<p><br></p><p>Pos.: {{ loop.index }}<br>Stk.: {{ item.qty }}<br></p><p><br></p>";
-</td></tr>
-</table>
-{% endfor %}
+    <html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    {% for item in items %}
+    <table style="width: 61mm !important; margin: 0px !important; padding: 0px !important;">
+        <tr>
+            <td style=\"font-size: 7pt  !important;">"
+                <p><br></p><p>{{ customer }}<br></p>
+                <p><strong>{{ item.item_name }}<br></p>
+                <p>Plan Nr.: {{ item.drawing_no }}</strong><br>Auftragsnr.: {{ item.against_sales_order }}<br>I. Bestell-N.: {{ po_no }}<br></p>
+            </td>
+            <td style=\"font-size: 7pt  !important;\">
+                <p><br></p><p><img src="https://kuchelmeister.ch/images/content/kuchelmeister/Logo-Kuchelmeister.jpg" style="width: 60px !important; "><br></p>
+                <p><br></p><p>Pos.: {{ loop.index }}<br>Stk.: {{ item.qty }}<br></p><p><br></p>";
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
 <body>
 </html>
