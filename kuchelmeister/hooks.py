@@ -127,3 +127,10 @@ app_license = "AGPL"
 # 	"Task": "kuchelmeister.task.get_dashboard_data"
 # }
 
+# Additional Jinja functions
+jenv = {
+    "methods": [
+        "expand_so_bom:kuchelmeister.utils.jinja.expand_so_bom",
+        "get_so_materials:kuchelmeister.utils.jinja.get_so_materials"
+    ]
+}
