@@ -14,5 +14,17 @@ def get_data():
                        "description": _("Trumpf Settings")
                    }
             ]
+        },
+        {
+            "label": _("Documents"),
+            "icon": "octicon oction-book",
+            "items": [
+                   {
+                       "type": "doctype",
+                       "name": "Anmeldung Subakkordant",
+                       "label": _("Anmeldung Subakkordant"),
+                       "description": _("Anmeldung Subakkordant")
+                   }
+            ]
         }
 ]

@@ -3,19 +3,22 @@
 
 frappe.ui.form.on('Anmeldung Subakkordant', {
 	refresh: function(frm) {
-
+        // contact filters
+        cur_frm.fields_dict.contact.get_query = function(doc) {
+             return {
+                 filters: {
+                     "link_doctype": "Supplier",
+                     "link_name": frm.doc.supplier
+                 }
+             };
+        };
+        // set default date
+        if (!frm.doc.date) {
+            cur_frm.set_value("date", new Date());
+        }
 	},
     contact: function(frm) {
         if (frm.doc.contact) {
-            // contact filters
-            cur_frm.fields_dict.contact.get_query = function(doc) {
-                 return {
-                     filters: {
-                         "link_doctype": "Supplier",
-                         "link_name": frm.doc.supplier
-                     }
-                 };
-            };
             // get contact name
             frappe.call({
                 "method": "frappe.client.get",
