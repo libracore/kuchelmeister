@@ -12,6 +12,15 @@ frappe.ui.form.on('Anmeldung Subakkordant', {
                  }
              };
         };
+        // address filters
+        cur_frm.fields_dict.supplier_address.get_query = function(doc) {
+             return {
+                 filters: {
+                     "link_doctype": "Supplier",
+                     "link_name": frm.doc.supplier
+                 }
+             };
+        };
         // set default date
         if (!frm.doc.date) {
             cur_frm.set_value("date", new Date());
@@ -31,6 +40,29 @@ frappe.ui.form.on('Anmeldung Subakkordant', {
 
                     if (contact) {
                         frm.set_value('contact_name', (contact.first_name || "") + " " + (contact.last_name || ""));
+                    }
+                }
+            });
+        }
+    },
+    supplier_address: function(frm) {
+        if (frm.doc.supplier_address) {
+            // get contact name
+            frappe.call({
+                "method": "frappe.client.get",
+                "args": {
+                    "doctype": "Address",
+                    "name": frm.doc.supplier_address
+                },
+                "callback": function(response) {
+                    var address = response.message;
+
+                    if (address) {
+                        var display = address.address_line1;
+                        if (address.address_line2) { display += "<br>" + address.address_line2; }
+                        display += "<br>" + address.pincode + " " + address.city;
+                        display += "<br>" + address.country;
+                        frm.set_value('address_display', display);
                     }
                 }
             });
