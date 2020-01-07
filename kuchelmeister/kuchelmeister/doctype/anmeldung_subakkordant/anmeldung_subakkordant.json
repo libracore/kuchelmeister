@@ -1,4 +1,5 @@
 {
+ "autoname": "naming_series:",
  "creation": "2020-01-07 21:36:57.841134",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -12,6 +13,7 @@
   "date",
   "sales_order",
   "stock_entry",
+  "naming_series",
   "amended_from",
   "section_items",
   "items",
@@ -134,10 +136,18 @@
    "fieldtype": "Link",
    "label": "Stock Entry",
    "options": "Stock Entry"
+  },
+  {
+   "default": "AM-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming series",
+   "options": "AM-.#####"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-01-07 22:03:20.577299",
+ "modified": "2020-01-07 22:18:42.555110",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Anmeldung Subakkordant",
@@ -172,5 +182,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "supplier_name",
  "track_changes": 1
 }
