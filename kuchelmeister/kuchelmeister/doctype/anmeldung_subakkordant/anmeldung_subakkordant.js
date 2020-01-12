@@ -67,5 +67,31 @@ frappe.ui.form.on('Anmeldung Subakkordant', {
                 }
             });
         }
+    },
+    sales_order: function(frm) {
+        if (frm.doc.sales_order) { fetch_items_from_sales_order(frm); }
     }
 });
+
+function fetch_items_from_sales_order(frm) {
+    if (frm.doc.sales_order) {
+        frappe.call({
+            'method': 'frappe.client.get',
+            'args': {
+                'doctype': 'Sales Order',
+                'name': frm.doc.sales_order
+            },
+            'callback': function(response) {
+                var sales_order = response.message;
+                for (var i = 0; i < sales_order.items.length; i++) {
+                    var child = cur_frm.add_child('items');
+                    frappe.model.set_value(child.doctype, child.name, 'item', sales_order.items[i].item_code);
+                    frappe.model.set_value(child.doctype, child.name, 'item_name', sales_order.items[i].item_name);
+                    frappe.model.set_value(child.doctype, child.name, 'stock_uom', sales_order.items[i].stock_uom);
+                    frappe.model.set_value(child.doctype, child.name, 'qty', sales_order.items[i].qty);
+                    cur_frm.refresh_field('items');
+                }
+            }
+        });
+    }
+}
