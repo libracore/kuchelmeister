@@ -15,9 +15,11 @@
           <tr>
             <td style="font-size: 7pt  !important;">
                 <p><br></p><p>{{ customer }}<br></p>
-                <p><p>{{ item.item_name }}</b><br></p>
-                {% if item.description %}<p>{{ item.description }}</p>{% endif %}
-                <p>Plan Nr.: {{ item.drawing_no }}<br>Auftragsnr.: {{ item.against_sales_order }}<br>I. Bestell-N.: {{ po_no }}<br></p>
+                <p><b>{{ item.item_name }}</b><br></p>
+                <p>Plan Nr.: {{ item.drawing_no }}<br>Auftragsnr.: {{ item.against_sales_order }}<br>
+                I. Bestell-N.: {{ po_no }}<br>
+                {% if item.description %}{{ item.description }}{% endif %}
+                </p>
             </td>
             <td style="font-size: 7pt  !important;">
                 <p><br></p><p><img src="https://kuchelmeister.ch/images/content/kuchelmeister/Logo-Kuchelmeister.jpg" style="width: 60px !important; "><br></p>
