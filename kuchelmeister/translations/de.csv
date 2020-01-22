@@ -5,3 +5,4 @@ DocType: Item,Drawing No,Zeichnungsnummer
 DocType: Item,Open in Trumpf FAB,In Trumpf FAB eröffnen
 DocType: Item,Item created in Trumpf FAB,Artikel in Trumpf FAB erstellt
 DocType: Sales Order,Check Trumpf FAB,Trumpf FAB prüfen
+DocType: Kundenbesuch,Other,Weitere

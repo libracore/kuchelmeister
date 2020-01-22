@@ -2,7 +2,7 @@
 try {
     cur_frm.dashboard.add_transactions([
         {
-            'label': 'Other',
+            'label': __('Other'),
             'items': ['Anmeldung Subakkordant']
         }
     ]);

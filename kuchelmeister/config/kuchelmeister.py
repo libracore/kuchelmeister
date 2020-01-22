@@ -24,6 +24,12 @@ def get_data():
                        "name": "Anmeldung Subakkordant",
                        "label": _("Anmeldung Subakkordant"),
                        "description": _("Anmeldung Subakkordant")
+                   },
+                   {
+                       "type": "doctype",
+                       "name": "Kundenbesuch",
+                       "label": _("Kundenbesuch"),
+                       "description": _("Kundenbesuch")
                    }
             ]
         }
