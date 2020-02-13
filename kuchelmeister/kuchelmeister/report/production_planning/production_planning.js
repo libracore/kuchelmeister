@@ -9,6 +9,18 @@ frappe.query_reports["Production Planning"] = {
 			"label": __("Only reorder"),
 			"fieldtype": "Check",
 			"default": 1
+		},
+        {
+			"fieldname":"has_safety_stock",
+			"label": __("Has safety stock"),
+			"fieldtype": "Check",
+			"default": 1
+		},
+        {
+			"fieldname":"hide_no_transactions",
+			"label": __("Hide no transactions"),
+			"fieldtype": "Check",
+			"default": 1
 		}
 	]
 };

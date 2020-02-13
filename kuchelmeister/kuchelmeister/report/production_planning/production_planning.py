@@ -39,6 +39,11 @@ def get_planning_data(filters, only_reorder=0):
                 conditions.append("`tabBin`.`warehouse` = '{0}'".format(filters['warehouse']))
             if filters['only_reorder']:
                 conditions.append("(`tabBin`.`projected_qty` - `tabItem`.`safety_stock`) < 0")
+            if filters['has_safety_stock'] == 1:
+                conditions.append("(`tabItem`.`safety_stock` > 0)")
+            if filters['hide_no_transactions'] == 1:
+                conditions.append("(`tabBin`.`actual_qty` > 0 OR `tabBin`.`reserved_qty` > 0 OR `tabBin`.`ordered_qty` > 0 OR `tabBin`.`projected_qty` > 0)")
+
         except:
             pass
     else:
@@ -46,6 +51,10 @@ def get_planning_data(filters, only_reorder=0):
             conditions.append("`tabBin`.`warehouse` = '{0}'".format(filters.warehouse))
         if filters.only_reorder:
             conditions.append("(`tabBin`.`projected_qty` - `tabItem`.`safety_stock`) < 0")
+        if filters.has_safety_stock == 1:
+            conditions.append("(`tabItem`.`safety_stock` > 0)")
+        if filters.hide_no_transactions == 1:
+            conditions.append("(`tabBin`.`actual_qty` > 0 OR `tabBin`.`reserved_qty` > 0 OR `tabBin`.`ordered_qty` > 0 OR `tabBin`.`projected_qty` > 0)")
                     
     sql_query = """SELECT
         `tabBin`.`item_code` AS `item_code`, 
