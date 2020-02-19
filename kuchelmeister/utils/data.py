@@ -1,4 +1,4 @@
-# Copyright (c) 2016-2019, libracore and contributors
+# Copyright (c) 2016-2020, libracore and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -23,14 +23,21 @@ def check_so_item_availability(sales_order):
     # build a list with all items to check
     stock_items = []
     for i in so.items:
-        for expanded_item in check_items(i.item_code, i.qty):
+        for expanded_item in check_item(i.item_code, i.qty):
             stock_items.append(expanded_item)
+    # aggregate item list
+    short_items = {}
+    for i in stock_items:
+        if i['item_code'] in short_items:
+            short_items[i['item_code']] += i['qty']
+        else:
+            short_items[i['item_code']] = i['qty']
     # check availability
     availability_map = []
-    for stock_item in stock_items:
-        availability = check_availability(stock_item)
+    for key, value in short_items.items():
+        availability = check_availability(key, value)
         if availability:
-            availability_map.append(availability)
+            availability_map.append(availability[0])
     return availability_map
                 
 def check_item(item_code, qty):
@@ -43,7 +50,7 @@ def check_item(item_code, qty):
                        FROM `tabBOM` 
                        WHERE
                          `item` = '{item}'
-                         AND `doctstatus` = 1
+                         AND `docstatus` = 1
                          AND `is_active` = 1
                          AND `is_default` = 1;""".format(item=item_code)
         boms = frappe.db.sql(sql_query, as_dict=True)
@@ -51,7 +58,7 @@ def check_item(item_code, qty):
             # add child items
             bom = frappe.get_doc("BOM", boms[0]['name'])
             for i in bom.items:
-                for expanded_item in check_items(i.item_code, qty * i.qty):
+                for expanded_item in check_item(i.item_code, qty * i.qty):
                     stock_items.append(expanded_item)
         else:
             # no BOM, add item
@@ -59,15 +66,14 @@ def check_item(item_code, qty):
     return stock_items
 
 """ This function checks if qty of item_code is available """
-def check_availability(stock_item):
+def check_availability(item_code, qty):
     sql_query = """SELECT '{item_code}' AS `item_code`,
                      {qty} AS `qty`,
-                     SUM(`actual_qty`),
-                     SUM(`projected_qty`),
+                     IFNULL(SUM(`actual_qty`), 0) AS `actual_qty`,
+                     IFNULL(SUM(`projected_qty`), 0) AS `projected_qty`,
                      IF(SUM(`actual_qty`) > {qty}, 1, 0) AS `ok_now`,
                      IF(SUM(`projected_qty`) > {qty}, 1, 0) AS `ok_future`
                    FROM `tabBin`
-                   WHERE `item_code` = '{item_code}';""".format(item_code=stock_item['item_code'],
-                   qty=stock_item['qty']
+                   WHERE `item_code` = '{item_code}';""".format(item_code=item_code, qty=qty)
     data = frappe.db.sql(sql_query, as_dict=True)
     return data
