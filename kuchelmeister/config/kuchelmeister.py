@@ -30,6 +30,12 @@ def get_data():
                        "name": "Kundenbesuch",
                        "label": _("Kundenbesuch"),
                        "description": _("Kundenbesuch")
+                   },
+                   {
+                       "type": "doctype",
+                       "name": "Stundenerfassung",
+                       "label": _("Stundenerfassung"),
+                       "description": _("Stundenerfassung")
                    }
             ]
         }
