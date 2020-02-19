@@ -5,10 +5,17 @@
 frappe.query_reports["Kennzahlen"] = {
 	"filters": [
 		{
-			fieldname:"year",
-			label: __("Year"),
-			fieldtype: "Int",
-			default: new Date().getFullYear(),
+			fieldname:"from_date",
+			label: __("From date"),
+			fieldtype: "Date",
+			default: new Date(new Date().getFullYear(), 0, 1),
+			reqd: 1,
+		},
+        {
+			fieldname:"to_date",
+			label: __("To date"),
+			fieldtype: "Date",
+			default: new Date(),
 			reqd: 1,
 		}
 	]
