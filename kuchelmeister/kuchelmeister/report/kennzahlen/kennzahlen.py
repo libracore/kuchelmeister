@@ -21,7 +21,7 @@ def execute(filters=None):
 def get_columns():
     return [
         #{"label": _("Date"), "fieldname": "date", "fieldtype": "Data", "width": 50},
-        {"label": _("Kundenbesuche"), "fieldname": "customer_visits", "fieldtype": "Int", "width": 120},
+        {"label": _("Acquisition"), "fieldname": "customer_visits", "fieldtype": "Int", "width": 120},
         {"label": _("Angebote"), "fieldname": "quotations", "fieldtype": "Int", "width": 75},
         {"label": _("Angebotsvolumen"), "fieldname": "quotation_value", "fieldtype": "Currency", "width": 120},
         {"label": _("Bestellt"), "fieldname": "quotation_success_rate", "fieldtype": "Percent", "width": 70},
@@ -46,7 +46,7 @@ def get_columns():
 def get_values(from_date, to_date):
     # quotation KPIs
     sql_query = """SELECT
-       IFNULL(SUM(`tabQuotation`.`base_net_total`), 0) AS `revenue`,
+       IFNULL(SUM(`tabQuotation`.`potential`), 0) AS `revenue`,
        IFNULL(COUNT(`tabQuotation`.`base_net_total`), 0) AS `count`,
        (SELECT IFNULL(COUNT(`tQ1`.`name`), 0) 
         FROM `tabQuotation` AS `tQ1`
