@@ -26,11 +26,12 @@ def write_item(item_code):
     if attachments and len(attachments) > 0:
         documents = []
         for attachment in attachments:
-            documents.append({
-                'url': get_url(attachment['file_url']),
-                'name': attachment['name'],
-                'filename': attachment['file_name']
-            })
+            if attachment['is_private'] == 0:
+                documents.append({
+                    'url': "{0}{1}".format(settings.smb_path, attachment['file_name']),
+                    'name': attachment['name'],
+                    'filename': attachment['file_name']
+                })
     else:
         documents = None
     data = {

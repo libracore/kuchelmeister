@@ -5,7 +5,9 @@
  "engine": "InnoDB",
  "field_order": [
   "section_file_exchange",
-  "physical_path"
+  "physical_path",
+  "column_file_exchange",
+  "smb_path"
  ],
  "fields": [
   {
@@ -19,10 +21,20 @@
    "fieldname": "physical_path",
    "fieldtype": "Data",
    "label": "Physical path"
+  },
+  {
+   "fieldname": "column_file_exchange",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Mapped SMB path for public files (e.g. \\\\erpserver\\public\\)",
+   "fieldname": "smb_path",
+   "fieldtype": "Data",
+   "label": "SMB path"
   }
  ],
  "issingle": 1,
- "modified": "2019-12-16 15:24:05.504123",
+ "modified": "2020-03-10 17:01:25.625556",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Trumpf Settings",
