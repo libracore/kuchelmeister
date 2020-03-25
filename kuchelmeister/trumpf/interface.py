@@ -10,6 +10,8 @@ import hashlib          # for md5 hashes
 import os               # for file handling
 from frappe.desk.form.load import get_attachments
 from frappe.utils import get_url
+from bs4 import BeautifulSoup    # xml parser
+from datetime import date
 
 @frappe.whitelist()
 def write_item(item_code):
@@ -53,6 +55,8 @@ def write_item(item_code):
     item.trumpf_fab_opened = 1                  # mark as exported
     item.trumpf_item_code = trumpf_item_code    # store Trumpf item code
     item.save()
+    # add log
+    add_log(title="Item sent to FAB", message="Item: {item_code}".format(item_code=item_code))
     return
 
 @frappe.whitelist()
@@ -130,4 +134,125 @@ def write_production_order(sales_order_name):
         sales_order=sales_order_name), "w", "utf-8")
     file.write(content)
     file.close()
+    # add log
+    add_log(title="Sales Order sent to FAB", message="Sales Order: {sales_order_name}".format(
+        sales_order_name=sales_order_name))
+    return
+
+@frappe.whitelist()
+def cancel_production_order(sales_order_name):
+    settings = frappe.get_doc("Trumpf Settings")
+    target_path = settings.physical_path
+    order_codes = []
+    so = frappe.get_doc("Sales Order", sales_order_name)
+    for i in sales_order.items:
+        order_codes.append("{0}/{1}".format(sales_order_name, i.idx))
+    data = {
+        'order_codes': order_codes
+    }
+    content = frappe.render_template('kuchelmeister/trumpf/cancel_production_order.html', data)
+    file = codecs.open("{path}DelProdOrderImp{sales_order}.xml".format(path=target_path,
+        sales_order=sales_order_name), "w", "utf-8")
+    file.write(content)
+    file.close()
+    return
+
+# this function will import a file from FAB    
+def import_file(filename):
+    # read the file
+    f = open(filename, "r")
+    content = f.read()
+    f.close()
+    # check the content for content types
+    if "ProductionOrderFeedback" in content:
+        import_production_order_status(content)
+    # ..extend here..
+    
+    # move the file to archive
+    settings = frappe.get_doc("Trumpf Settings")
+    name = filename.split('/')[-1]
+    archive_filename = settings.archive_path + name
+    os.rename(filename, archive_filename)
+    return
+
+# this function will parse production order status information
+def import_production_order_status(content):
+    # prepare content
+    soup = BeautifulSoup(content, 'lxml')
+    production_orders = soup.find_all('productionorder')
+    for po in production_orders:
+        part_no = po.partno.get_text()
+        order_code = po['orderno']
+        sales_order = order_code.split('/')[0]
+        pos = int(order_code.split('/')[1])
+        return_code = int(po.returncode.get_text())
+        description = po.description.get_text()
+        
+        # make return code human readable
+        return_status = "unclear"
+        if return_code == 10:
+            return_status = "Completed"
+        elif return_code == 0:
+            return_status = "OK"
+        elif return_code == 30:
+            return_status = "Step done"
+            
+        # set item status
+        so = frappe.get_doc("Sales Order", sales_order)
+        so.items[pos - 1].fab_status = "{0}: {1} ({2})".format(date.today(), return_code, return_status)
+        so.save()
+        
+        # insert comment and pull last save date forward
+        comment="""Position: {pos}
+                   Return code: {rc} ({rs})""".format(
+            pos=pos,
+            rc=return_code,
+            rs=return_status)
+        """new_comment = frappe.get_doc({
+            'doctype': 'Communication',
+            'comment_type': 'Comment',
+            'content': comment,
+            'reference_doctype': 'Sales Order',
+            'status': 'Linked',
+            'reference_name': sales_order,
+            'owner': 'Administrator'
+        })
+        new_comment.insert()"""
+        frappe.db.commit()
+        
+        # add log
+        add_log(title="Sales Order Status from FAB", 
+            message="""Sales Order: {sales_order}, 
+                       Position: {pos}
+                       Return code: {rc} ({rs})""".format(
+            sales_order=sales_order,
+            pos=pos,
+            rc=return_code,
+            rs=return_status))
+        
+    return
+        
+# this function scans the share folder for new *Exp*.xml files    
+def check_exchange_folder():
+    settings = frappe.get_doc("Trumpf Settings")
+    files = []
+    for f in os.listdir(settings.physical_path):
+        full_name = os.path.join(settings.physical_path, f)
+        if os.path.isfile(full_name):
+            files.append(full_name)
+    for f in files:
+        if "Exp" in f and "xml" in f:
+            import_file(f)
+    return
+
+# add log
+def add_log(title, message):
+    l = frappe.get_doc({
+        'doctype': 'Trumpf Log',
+        'title': title,
+        'message': message,
+        'date': date.today()
+    })
+    l.insert()
+    frappe.db.commit()
     return
