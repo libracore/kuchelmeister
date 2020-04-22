@@ -6,6 +6,7 @@
  "field_order": [
   "section_file_exchange",
   "physical_path",
+  "archive_path",
   "column_file_exchange",
   "smb_path"
  ],
@@ -16,8 +17,8 @@
    "label": "File exchange"
   },
   {
-   "default": "/var/share/trumpf",
-   "description": "Physical exchange path, like /var/share/trumpf",
+   "default": "/var/share/trumpf/",
+   "description": "Physical exchange path, like /var/share/trumpf/",
    "fieldname": "physical_path",
    "fieldtype": "Data",
    "label": "Physical path"
@@ -31,10 +32,17 @@
    "fieldname": "smb_path",
    "fieldtype": "Data",
    "label": "SMB path"
+  },
+  {
+   "default": "/var/share/trumpf/archive/",
+   "description": "Physical exchange path, like /var/share/trumpf/archive/",
+   "fieldname": "archive_path",
+   "fieldtype": "Data",
+   "label": "Archive path"
   }
  ],
  "issingle": 1,
- "modified": "2020-03-10 17:01:25.625556",
+ "modified": "2020-03-25 17:49:15.848414",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Trumpf Settings",
