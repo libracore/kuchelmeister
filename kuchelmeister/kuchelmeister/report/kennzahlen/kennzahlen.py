@@ -39,6 +39,9 @@ def get_columns():
         {"label": _("Istzeit [h]"), "fieldname": "ist_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Ferien [h]"), "fieldname": "ferien_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Krankheit [h]"), "fieldname": "krank_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Weiterbildung [h]"), "fieldname": "wb_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Militär [h]"), "fieldname": "mil_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Kurzarbeit [h]"), "fieldname": "kz_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Wirtschaftlichkeit"), "fieldname": "profitability", "fieldtype": "Currency", "width": 120}
     ]
 
@@ -120,6 +123,9 @@ def get_values(from_date, to_date):
        IFNULL(SUM(`tabStundenerfassung`.`soll_stunden`), 0) AS `soll_stunden`,
        IFNULL(SUM(`tabStundenerfassung`.`ist_stunden`), 0) AS `ist_stunden`,
        IFNULL(SUM(`tabStundenerfassung`.`krank_stunden`), 0) AS `krank_stunden`,
+       IFNULL(SUM(`tabStundenerfassung`.`wb_stunden`), 0) AS `wb_stunden`,
+       IFNULL(SUM(`tabStundenerfassung`.`mil_stunden`), 0) AS `mil_stunden`,
+       IFNULL(SUM(`tabStundenerfassung`.`kz_stunden`), 0) AS `kz_stunden`,
        IFNULL(SUM(`tabStundenerfassung`.`ferien_stunden`), 0) AS `ferien_stunden`
      FROM `tabStundenerfassung`
      WHERE
@@ -154,6 +160,9 @@ def get_values(from_date, to_date):
         'ist_stunden': time_info['ist_stunden'],
         'krank_stunden': time_info['krank_stunden'],
         'ferien_stunden': time_info['ferien_stunden'],
+        'mil_stunden': time_info['mil_stunden'],
+        'kz_stunden': time_info['kz_stunden'],
+        'wb_stunden': time_info['wb_stunden'],
         'profitability': profitability
     }
     

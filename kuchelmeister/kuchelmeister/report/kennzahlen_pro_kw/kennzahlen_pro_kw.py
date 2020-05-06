@@ -44,6 +44,9 @@ def get_columns():
         {"label": _("Istzeit [h]"), "fieldname": "ist_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Ferien [h]"), "fieldname": "ferien_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Krankheit [h]"), "fieldname": "krank_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Weiterbildung [h]"), "fieldname": "wb_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Militär [h]"), "fieldname": "mil_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
+        {"label": _("Kurzarbeit [h]"), "fieldname": "kz_stunden", "fieldtype": "Float", "precision": 1, "width": 80},
         {"label": _("Wirtschaftlichkeit"), "fieldname": "profitability", "fieldtype": "Currency", "width": 120}
     ]
 

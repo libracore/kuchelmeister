@@ -11,8 +11,12 @@
   "section_hours",
   "soll_stunden",
   "ist_stunden",
-  "krank_stunden",
   "ferien_stunden",
+  "column_hours",
+  "krank_stunden",
+  "wb_stunden",
+  "mil_stunden",
+  "kz_stunden",
   "amended_from"
  ],
  "fields": [
@@ -66,10 +70,29 @@
    "options": "Stundenerfassung",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "column_hours",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wb_stunden",
+   "fieldtype": "Float",
+   "label": "Weiterbildungs-Stunden"
+  },
+  {
+   "fieldname": "mil_stunden",
+   "fieldtype": "Float",
+   "label": "Milit\u00e4r-Stunden"
+  },
+  {
+   "fieldname": "kz_stunden",
+   "fieldtype": "Float",
+   "label": "Kurzzeit-Stunden"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-02-19 19:55:18.892729",
+ "modified": "2020-05-06 15:16:23.111922",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Stundenerfassung",
