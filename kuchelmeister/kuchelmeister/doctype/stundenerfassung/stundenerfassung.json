@@ -9,8 +9,8 @@
   "column_date",
   "bis_datum",
   "section_hours",
-  "soll_stunden",
   "ist_stunden",
+  "soll_stunden",
   "ferien_stunden",
   "column_hours",
   "krank_stunden",
@@ -92,7 +92,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-05-06 15:16:23.111922",
+ "modified": "2020-05-11 19:43:51.866003",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "Stundenerfassung",
