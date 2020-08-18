@@ -36,7 +36,7 @@ def write_item(item_code):
                     'filename': attachment['file_name']
                 })
             # GEO files override other drawing types
-            if (attachment['file_name'].endswith(".geo"):
+            if attachment['file_name'].endswith(".geo"):
                 cad_file_name = "{0}{1}".format(settings.smb_path, attachment['file_name'])
             # attach other drawing types if empty
             if (attachment['file_name'].endswith(".dxf") or attachment['file_name'].endswith(".dxg") or attachment['file_name'].endswith(".step")) and cad_file_name == None:
