@@ -210,7 +210,9 @@ def import_production_order_status(content):
             return_status = "OK"
         elif return_code == 30:
             return_status = "Step done"
-            
+        elif return_code == -99:
+            return_status = "Deleted"
+                        
         # set item status
         so = frappe.get_doc("Sales Order", sales_order)
         so.items[pos - 1].fab_status = "{0}: {1} ({2})".format(date.today(), return_code, return_status)
