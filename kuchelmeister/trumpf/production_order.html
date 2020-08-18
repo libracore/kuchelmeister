@@ -15,7 +15,7 @@
     {%- if item.drawing_no %}
     <DrawingNo>{{ item.drawing_no }}</DrawingNo>
     {%- endif %}
-    <DueDate>{{ delivery_date }}</DueDate>
+    <DueDate>{{ item.delivery_date }}</DueDate>
     <DesiredQuantity>{{ item.qty }}</DesiredQuantity>
     {%- if item.material %}
     <Material>{{ item.material }}</Material>

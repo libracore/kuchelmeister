@@ -113,8 +113,12 @@ def write_production_order(sales_order_name):
                 'qty': i.qty,
                 'drawing_no': drawing_no,
                 'material': material,
-                'order_code': "{0}/{1}".format(sales_order_name, i.idx)
-            })            
+                'order_code': "{0}/{1}".format(sales_order_name, i.idx),
+                'delivery_date': "{day:02d}.{month:02d}.{year:04d} 00:00".format(
+                    day=i.delivery_date.day,
+                    month=i.delivery_date.month,
+                    year=i.delivery_date.year)
+            })
     attachments = get_attachments(dt="Sales Order", dn=sales_order_name)
     if attachments and len(attachments) > 0:
         documents = []
@@ -132,7 +136,7 @@ def write_production_order(sales_order_name):
         'customer_name': cgi.escape(sales_order.customer_name),
         'sales_order': sales_order.name,
         'items': items,
-        'delivery_date': "{day:2d}.{month:2d}.{year:4d} 00:00".format(
+        'delivery_date': "{day:02d}.{month:02d}.{year:04d} 00:00".format(
             day=sales_order.delivery_date.day,
             month=sales_order.delivery_date.month,
             year=sales_order.delivery_date.year)
