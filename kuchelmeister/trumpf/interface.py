@@ -137,14 +137,16 @@ def write_production_order(sales_order_name):
             month=sales_order.delivery_date.month,
             year=sales_order.delivery_date.year)
     }
-    content = frappe.render_template('kuchelmeister/trumpf/production_order.html', data)
-    file = codecs.open("{path}ProdOrderImp{sales_order}.xml".format(path=target_path,
-        sales_order=sales_order_name), "w", "utf-8")
-    file.write(content)
-    file.close()
-    # add log
-    add_log(title="Sales Order sent to FAB", message="Sales Order: {sales_order_name}".format(
-        sales_order_name=sales_order_name))
+    # only create transfer file if there are items
+    if len(items) > 0:
+        content = frappe.render_template('kuchelmeister/trumpf/production_order.html', data)
+        file = codecs.open("{path}ProdOrderImp{sales_order}.xml".format(path=target_path,
+            sales_order=sales_order_name), "w", "utf-8")
+        file.write(content)
+        file.close()
+        # add log
+        add_log(title="Sales Order sent to FAB", message="Sales Order: {sales_order_name}".format(
+            sales_order_name=sales_order_name))
     return
 
 @frappe.whitelist()
