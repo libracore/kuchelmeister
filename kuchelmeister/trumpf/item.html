@@ -16,8 +16,7 @@
     {%- if documents %}
     <DocumentsLinkedToPart>
         {%- for document in documents %}
-        <Document>
-            <Path>{{ document.url }}</Path>
+        <Document Path="{{ document.url }}">
             <Title>{{ document.filename }}</Title>
             <Description>{{ document.filename }}</Description>
             <Version>1.0</Version>
