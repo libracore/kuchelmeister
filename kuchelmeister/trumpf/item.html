@@ -9,6 +9,10 @@
     <Material>{{ material }}</Material>
     {%- endif %}
     <StockUnit>{{ default_uom }}</StockUnit>
+    {%- if cad_file_name %}
+    <CADFilename>{{ cad_file_name }}</CADFilename>
+    {%- endif %}
+    <IsAutoRemoveable>0</IsAutoRemoveable>
     {%- if documents %}
     <DocumentsLinkedToPart>
         {%- for document in documents %}

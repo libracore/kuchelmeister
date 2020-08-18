@@ -27,6 +27,7 @@ def write_item(item_code):
     attachments = get_attachments(dt="Item", dn=item_code)
     if attachments and len(attachments) > 0:
         documents = []
+        cad_file_name = None
         for attachment in attachments:
             if attachment['is_private'] == 0:
                 documents.append({
@@ -34,6 +35,12 @@ def write_item(item_code):
                     'name': attachment['name'],
                     'filename': attachment['file_name']
                 })
+            # GEO files override other drawing types
+            if (attachment['file_name'].endswith(".geo"):
+                cad_file_name = "{0}{1}".format(settings.smb_path, attachment['file_name'])
+            # attach other drawing types if empty
+            if (attachment['file_name'].endswith(".dxf") or attachment['file_name'].endswith(".dxg") or attachment['file_name'].endswith(".step")) and cad_file_name == None:
+                cad_file_name = "{0}{1}".format(settings.smb_path, attachment['file_name'])
     else:
         documents = None
     data = {
@@ -44,7 +51,8 @@ def write_item(item_code):
         'material': material,
         'default_uom': item.stock_uom,
         'documents': documents,
-        'prices': None
+        'prices': None,
+        'cad_file_name': cad_file_name
     }
     content = frappe.render_template('kuchelmeister/trumpf/item.html', data)
     file = codecs.open("{path}MasterDataImp{item_code}.xml".format(path=target_path,
