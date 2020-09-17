@@ -47,7 +47,7 @@ def write_item(item_code):
     soup = BeautifulSoup(item.description)
     short_description = soup.get_text()[:50]
     data = {
-        'item_code': cgi.escape(item_code),
+        'item_code': cgi.escape(item_code[:50]),
         'trumpf_item_code': trumpf_item_code,
         'description': cgi.escape(short_description),
         'item_group': cgi.escape(item.item_group),
