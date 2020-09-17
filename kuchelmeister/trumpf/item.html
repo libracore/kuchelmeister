@@ -48,6 +48,23 @@
         {%- endfor %}
     </PriceLists>
     {%- endif %}
+    {%- if bom_parts and bom_parts|len > 0 %}
+    <WorkingPlan>
+        <WorkingStep OperationNo="10">
+          <Activity>Assembling</Activity>
+          <WorkPlace>Assembling</WorkPlace>
+          <Resources>
+            {%- for bom_part in bom_parts %}
+            <Resource>
+              <ArticleNo>{{ bom_part.part_no }}</ArticleNo>
+              <Quantity>{{ bom_part.qty }}</Quantity>
+              <UnitOfQuantity>{{ bom_part.uom }}</UnitOfQuantity>
+            </Resource>
+            {% endfor %}
+          </Resources>
+        </WorkingStep>
+      </WorkingPlan>
+    {%- endif %}
   </Part>
  </Parts>
 </PPSImport>
