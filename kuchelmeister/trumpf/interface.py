@@ -43,10 +43,13 @@ def write_item(item_code):
                 cad_file_name = "{0}{1}".format(settings.smb_path, attachment['file_name'])
     else:
         documents = None
+    # prepare description: no html, only 50 characters
+    soup = BeautifulSoup(item.description)
+    short_description = soup.get_text()[:50]
     data = {
         'item_code': cgi.escape(item_code),
         'trumpf_item_code': trumpf_item_code,
-        'description': cgi.escape(item.description),
+        'description': cgi.escape(short_description),
         'item_group': cgi.escape(item.item_group),
         'material': material,
         'default_uom': item.stock_uom,
