@@ -25,9 +25,9 @@ def write_item(item_code):
     else:
         material = None
     attachments = get_attachments(dt="Item", dn=item_code)
+    cad_file_name = None
     if attachments and len(attachments) > 0:
         documents = []
-        cad_file_name = None
         for attachment in attachments:
             if attachment['is_private'] == 0:
                 documents.append({
@@ -51,7 +51,7 @@ def write_item(item_code):
     else:
         drawing_no = None
     data = {
-        'item_code': cgi.escape(item_code),
+        'item_code': cgi.escape(item_code[:50]),
         'trumpf_item_code': trumpf_item_code,
         'description': cgi.escape(short_description),
         'drawing_no': cgi.escape(drawing_no),
@@ -65,7 +65,7 @@ def write_item(item_code):
     # check if there is an active BOM
     active_bom = frappe.get_all("BOM", filters={'item': item_code, 'is_active': 1, 'is_default': 1, 'docstatus': 1}, fields=['name'])
     if active_bom and len(active_bom) > 0:
-        bom = frappe.get_doc("BOM", active_bom[0]['name']
+        bom = frappe.get_doc("BOM", active_bom[0]['name'])
         bom_parts = []
         for item in bom.items:
             item_data = frappe.get_doc("Item", item.item_code)
@@ -73,14 +73,14 @@ def write_item(item_code):
                 bom_parts.append({
                     'part_no': item_data.trumpf_item_code,
                     'qty': item.qty,
-                    'uom': uom
+                    'uom': item.uom
                 })
         if len(bom_parts) > 0:
             data['bom_parts'] = bom_parts
             
     content = frappe.render_template('kuchelmeister/trumpf/item.html', data)
     file = codecs.open("{path}MasterDataImp{item_code}.xml".format(path=target_path,
-        item_code=item_code), "w", "utf-8")
+        item_code=trumpf_item_code), "w", "utf-8")
     file.write(content)
     file.close()
     # update item
