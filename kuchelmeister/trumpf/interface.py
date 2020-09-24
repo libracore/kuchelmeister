@@ -46,10 +46,15 @@ def write_item(item_code):
     # prepare description: no html, only 50 characters
     soup = BeautifulSoup(item.description)
     short_description = soup.get_text()[:50]
+    if item.drawing_no:
+        drawing_no = cgi.escape(item.drawing_no)
+    else:
+        drawing_no = None
     data = {
         'item_code': cgi.escape(item_code),
         'trumpf_item_code': trumpf_item_code,
         'description': cgi.escape(short_description),
+        'drawing_no': cgi.escape(drawing_no),
         'item_group': cgi.escape(item.item_group),
         'material': material,
         'default_uom': item.stock_uom,

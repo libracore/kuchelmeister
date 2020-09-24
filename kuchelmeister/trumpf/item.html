@@ -4,6 +4,9 @@
   <Part PartNo="{{ trumpf_item_code }}">
     <PartNoExt>{{ item_code }}</PartNoExt>
     <Description>{{ description }}</Description>
+    {%- if drawing_no %}
+    <DrawingNo>{{ drawing_no }}</DrawingNo>
+    {%- endif %}
     <Category>{{ item_group }}</Category>
     {%- if material %}
     <Material>{{ material }}</Material>
