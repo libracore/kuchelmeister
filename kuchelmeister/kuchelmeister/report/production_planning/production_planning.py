@@ -17,14 +17,14 @@ def get_columns():
     return [
         {"label": _("Item Code"), "fieldname": "item_code", "fieldtype": "Link", "options": "Item", "width": 140},
         {"label": _("Item Name"), "fieldname": "item_name", "width": 100},
-        {"label": _("Item Group"), "fieldname": "item_group", "fieldtype": "Link", "options": "Item Group", "width": 100},
-        {"label": _("Warehouse"), "fieldname": "warehouse", "fieldtype": "Link", "options": "Warehouse", "width": 120},
-        {"label": _("Actual Qty"), "fieldname": "actual_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
-        {"label": _("Reserved Qty"), "fieldname": "reserved_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
-        {"label": _("Ordered Qty"), "fieldname": "ordered_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
-        {"label": _("Projected Qty"), "fieldname": "projected_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
-        {"label": _("Safety Stock"), "fieldname": "safety_stock", "fieldtype": "Float", "width": 100, "convertible": "qty"},
-        {"label": _("Projected Safety Qty"), "fieldname": "projected_safety_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Bestand"), "fieldname": "actual_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Bedarf Kundenauftr."), "fieldname": "reserved_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Bedarf Arbeitsauftr."), "fieldname": "reserved_qty_for_production", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Bestellt"), "fieldname": "ordered_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("In Fertigung"), "fieldname": "indented_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Erwartet"), "fieldname": "projected_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Sicherheitsbestand"), "fieldname": "safety_stock", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _("Erwartet inkl. Sicherheit"), "fieldname": "projected_safety_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
     ]
 
 @frappe.whitelist()
@@ -63,7 +63,9 @@ def get_planning_data(filters, only_reorder=0):
         `tabBin`.`warehouse` AS `warehouse`, 
         `tabBin`.`actual_qty` AS `actual_qty`, 
         `tabBin`.`reserved_qty` AS `reserved_qty`,
+        `tabBin`.`reserved_qty_for_production` AS `reserved_qty_for_production`,
         `tabBin`.`ordered_qty` AS `ordered_qty`,
+        `tabBin`.`ordered_qty` AS `indented_qty`,
         `tabBin`.`projected_qty` AS `projected_qty`,
         `tabItem`.`safety_stock` AS `safety_stock`,
         (`tabBin`.`projected_qty` - `tabItem`.`safety_stock`) AS `projected_safety_qty`
