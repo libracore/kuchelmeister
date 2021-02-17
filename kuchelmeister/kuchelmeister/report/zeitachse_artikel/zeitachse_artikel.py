@@ -15,10 +15,11 @@ def execute(filters=None):
 
 def get_columns():
     return [
-        {"label": _("Date"), "fieldname": "date", "fieldtype": "Date", "width": 140},
+        {"label": _("Datum Bedarf"), "fieldname": "date", "fieldtype": "Date", "width": 140},
         {"label": _("Qty"), "fieldname": "qty", "fieldtype": "Float", "width": 100},
         {"label": _("Work Order"), "fieldname": "work_order", "fieldtype": "Link", "options": "Work Order", "width": 100},
         {"label": _("Sales Order"), "fieldname": "sales_order", "fieldtype": "Link", "options": "Sales Order", "width": 100},
+        {"label": _("Datum Kundenlieferung"), "fieldname": "delivery_date", "fieldtype": "Date", "width": 140},
         {"label": _("Type"), "fieldname": "type", "fieldtype": "Data", "width": 100},
     ]
 
@@ -32,6 +33,7 @@ def get_data(filters):
     sql_query = """SELECT * FROM 
   (SELECT 
     `tabSales Order Item`.`delivery_date` AS `date`,
+    `tabSales Order Item`.`delivery_date` AS `delivery_date`,
     ((-1) * `tabSales Order Item`.`qty`) AS `qty`,
     `tabSales Order`.`name` AS `sales_order`,
     "" AS `work_order`,
