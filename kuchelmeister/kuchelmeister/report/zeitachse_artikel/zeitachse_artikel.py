@@ -45,22 +45,26 @@ def get_data(filters):
      AND `tabSales Order`.`status` IN ("To Deliver", "To Deliver and Bill")
   UNION SELECT 
     `tabWork Order`.`planned_start_date` AS `date`,
+    `tabSales Order`.`delivery_date` AS `delivery_date`,
     ((-1) * `tabWork Order Item`.`required_qty`) AS `qty`,
     `tabWork Order`.`sales_order` AS `sales_order`,
     `tabWork Order`.`name` AS `work_order`,
     "Vorstufe" AS `type`
    FROM `tabWork Order Item`
    LEFT JOIN `tabWork Order` ON `tabWork Order`.`name` = `tabWork Order Item`.`parent`
+   LEFT JOIN `tabSales Order` ON `tabSales Order`.`name` = `tabWork Order`.`sales_order`
    WHERE `tabWork Order Item`.`item_code` = '{item_code}'
      AND `tabWork Order`.`docstatus` = 1
      AND `tabWork Order`.`status` IN ("Not Started")
   UNION SELECT 
     `tabWork Order`.`expected_delivery_date` AS `date`,
+    `tabSales Order`.`delivery_date` AS `delivery_date`,
     `tabWork Order`.`qty` AS `qty`,
     `tabWork Order`.`sales_order` AS `sales_order`,
     `tabWork Order`.`name` AS `work_order`,
     "Endprodukt" AS `type`
    FROM `tabWork Order`
+   LEFT JOIN `tabSales Order` ON `tabSales Order`.`name` = `tabWork Order`.`sales_order`
    WHERE `tabWork Order`.`production_item` = '{item_code}'
      AND `tabWork Order`.`docstatus` = 1
      AND `tabWork Order`.`status` IN ("Not Started")
