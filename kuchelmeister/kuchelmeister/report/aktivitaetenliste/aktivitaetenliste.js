@@ -1,37 +1,37 @@
-// Copyright (c) 2020, libracore and contributors
+// Copyright (c) 2020-2021, libracore and contributors
 // For license information, please see license.txt
 /* eslint-disable */
 
 frappe.query_reports["Aktivitaetenliste"] = {
-	"filters": [
+    "filters": [
         {
-			"fieldname":"verantwortlich",
-			"label": __("Verantwortlich"),
-			"fieldtype": "Link",
-			"options": "User",
+            "fieldname":"verantwortlich",
+            "label": __("Verantwortlich"),
+            "fieldtype": "Link",
+            "options": "User",
             "default": frappe.user.name
         },
         {
-			"fieldname":"week",
-			"label": __("KW"),
-			"fieldtype": "Int",
-			"default": getWeekNumber(new Date()),
+            "fieldname":"week",
+            "label": __("KW"),
+            "fieldtype": "Int",
+            "default": getWeekNumber(new Date()),
             "reqd": 1
         },
         {
-			"fieldname":"year",
-			"label": __("Year"),
-			"fieldtype": "Int",
-			"default": new Date().getFullYear(),
+            "fieldname":"year",
+            "label": __("Year"),
+            "fieldtype": "Int",
+            "default": new Date().getFullYear(),
             "reqd": 1
         },
         {
-			"fieldname":"prio",
-			"label": __("Prio"),
-			"fieldtype": "Select",
-			"options": "\nHoch\nMittel\nTief"
+            "fieldname":"prio",
+            "label": __("Prio"),
+            "fieldtype": "Select",
+            "options": "\nHoch\nMittel\nTief"
         }
-	]
+    ]
 };
 
 function getWeekNumber(d) {
