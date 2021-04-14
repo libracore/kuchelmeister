@@ -44,73 +44,73 @@ def get_data():
             "icon": "octicon oction-book",
             "items": [
                 {
-					"type": "report",
-					"name": "Production Planning",
-					"doctype": "Bin",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Production Planning",
+                    "doctype": "Bin",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Zeitachse Artikel",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Zeitachse Artikel",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Umsatz pro Kunde",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Umsatz pro Kunde",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Lagerprojektion",
-					"doctype": "Bin",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Lagerprojektion",
+                    "doctype": "Bin",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Kennzahlen",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Kennzahlen",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Kennzahlen pro KW",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Kennzahlen pro KW",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Kennzahlen pro Monat",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Auftragsausblick",
-					"doctype": "Sales Order",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Accounts Receivable",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Accounts Payable",
-					"doctype": "Purchase Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Stock Balance",
-					"doctype": "Stock Ledger Entry",
-					"onboard": 1,
-					"dependencies": ["Item"],
-				}
+                    "type": "report",
+                    "name": "Kennzahlen pro Monat",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Auftragsausblick",
+                    "doctype": "Sales Order",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Accounts Receivable",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Accounts Payable",
+                    "doctype": "Purchase Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "is_query_report": True,
+                    "name": "Stock Balance",
+                    "doctype": "Stock Ledger Entry",
+                    "onboard": 1,
+                    "dependencies": ["Item"],
+                }
             ]
         },
         {
@@ -118,29 +118,29 @@ def get_data():
             "icon": "octicon oction-book",
             "items": [
                 {
-					"type": "report",
-					"name": "Mahnliste",
-					"doctype": "Payment Reminder",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Mahnliste",
+                    "doctype": "Payment Reminder",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Kontrolle MwSt",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Kontrolle MwSt",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Offertenliste",
-					"doctype": "Quotation",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Offertenliste",
+                    "doctype": "Quotation",
+                    "is_query_report": True
+                },
                 {
-					"type": "report",
-					"name": "Kunden-KPI",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
+                    "type": "report",
+                    "name": "Kunden-KPI",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
             ]
         },
         {
@@ -171,30 +171,30 @@ def get_data():
                        "label": _("Payment Entry"),
                        "description": _("Payment Entry")
                 },
-				{
-					"type": "report",
-					"name": "Accounts Receivable",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Accounts Receivable Summary",
-					"doctype": "Sales Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Accounts Payable",
-					"doctype": "Purchase Invoice",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Accounts Payable Summary",
-					"doctype": "Purchase Invoice",
-					"is_query_report": True
-				}
+                {
+                    "type": "report",
+                    "name": "Accounts Receivable",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Accounts Receivable Summary",
+                    "doctype": "Sales Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Accounts Payable",
+                    "doctype": "Purchase Invoice",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Accounts Payable Summary",
+                    "doctype": "Purchase Invoice",
+                    "is_query_report": True
+                }
             ]
         },
         {
@@ -212,6 +212,43 @@ def get_data():
                        "name": "Inspection Equipment",
                        "label": _("Inspection Equipment"),
                        "description": _("Inspection Equipment")
+                }
+            ]
+        },
+        {
+            "label": _("Marketing und Verkauf"),
+            "icon": "octicon oction-book",
+            "items": [
+                {
+                       "type": "doctype",
+                       "name": "Customer",
+                       "label": _("Customer"),
+                       "description": _("Customer")
+                },
+                {
+                       "type": "doctype",
+                       "name": "Contact",
+                       "label": _("Contact"),
+                       "description": _("Contact")
+                },
+                {
+                       "type": "doctype",
+                       "name": "Address",
+                       "label": _("Address"),
+                       "description": _("Address")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Aktivitaet",
+                    "label": _("Aktivitaet"),
+                    "description": _("Aktivitaet")
+                },
+                {
+                    "type": "report",
+                    "name": "Aktivitaetenliste",
+                    "label": _("Aktivitaetenliste"),
+                    "doctype": "Aktivitaet",
+                    "is_query_report": True
                 }
             ]
         }
