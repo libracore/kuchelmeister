@@ -21,7 +21,8 @@ def import_customer(content):
         "grobeinteilung": content['customer']['grobeinteilung'],
         "klassifizierung": content['customer']['klassifizierung'],
         "language": content['customer']['language'],
-        "website": content['customer']['website']
+        "website": content['customer']['website'],
+        "naehere_umschreibung": content['customer']['naehere_umschreibung']
     })
     new_customer.insert()
     
