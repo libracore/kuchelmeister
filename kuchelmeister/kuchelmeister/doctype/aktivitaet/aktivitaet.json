@@ -140,7 +140,7 @@
   },
   {
    "fieldname": "aufgabe",
-   "fieldtype": "Data",
+   "fieldtype": "Long Text",
    "in_standard_filter": 1,
    "label": "Aufgabe"
   },
