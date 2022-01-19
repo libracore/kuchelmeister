@@ -7,3 +7,7 @@ DocType: Item,Item created in Trumpf FAB,Artikel in Trumpf FAB erstellt
 DocType: Sales Order,Check Trumpf FAB,Trumpf FAB prüfen
 DocType: Kundenbesuch,Other,Weitere
 DocType: Non Conformity Report 8D,Intern,Intern
+Report: Production Planning,Only reorder,Nur Fehlmengen
+Report: Production Planning,Hide no transactions,Ohne Transaktionen ausblenden
+Report: Production Planning,Has safety stock,Mit Sicherheitsbestand
+Report: Production Planning,Production Planning,Bedarfsplanung

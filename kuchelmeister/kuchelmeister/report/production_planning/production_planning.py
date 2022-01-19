@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2020, libracore and contributors
+# Copyright (c) 2019-2022, libracore and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -17,6 +17,7 @@ def get_columns():
     return [
         {"label": _("Item Code"), "fieldname": "item_code", "fieldtype": "Link", "options": "Item", "width": 140},
         {"label": _("Item Name"), "fieldname": "item_name", "width": 100},
+        {"label": _("Item Group"), "fieldname": "item_group", "fieldtype": "Link", "options": "Item Group", "width": 140},
         {"label": _("Bestand"), "fieldname": "actual_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
         {"label": _("Bedarf Kundenauftr."), "fieldname": "reserved_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
         {"label": _("Bedarf Arbeitsauftr."), "fieldname": "reserved_qty_for_production", "fieldtype": "Float", "width": 100, "convertible": "qty"},
@@ -25,6 +26,7 @@ def get_columns():
         {"label": _("Erwartet"), "fieldname": "projected_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
         {"label": _("Sicherheitsbestand"), "fieldname": "safety_stock", "fieldtype": "Float", "width": 100, "convertible": "qty"},
         {"label": _("Erwartet inkl. Sicherheit"), "fieldname": "projected_safety_qty", "fieldtype": "Float", "width": 100, "convertible": "qty"},
+        {"label": _(""), "fieldname": "blank", "width": 20}
     ]
 
 @frappe.whitelist()
@@ -43,7 +45,8 @@ def get_planning_data(filters, only_reorder=0):
                 conditions.append("(`tabItem`.`safety_stock` > 0)")
             if filters['hide_no_transactions'] == 1:
                 conditions.append("(`tabBin`.`actual_qty` > 0 OR `tabBin`.`reserved_qty` > 0 OR `tabBin`.`ordered_qty` > 0 OR `tabBin`.`projected_qty` > 0)")
-
+            if filters['item_group']:
+                conditions.append("`tabItem`.`item_group` = '{0}'".format(filters['item_group']))
         except:
             pass
     else:
@@ -55,7 +58,9 @@ def get_planning_data(filters, only_reorder=0):
             conditions.append("(`tabItem`.`safety_stock` > 0)")
         if filters.hide_no_transactions == 1:
             conditions.append("(`tabBin`.`actual_qty` > 0 OR `tabBin`.`reserved_qty` > 0 OR `tabBin`.`ordered_qty` > 0 OR `tabBin`.`projected_qty` > 0)")
-                    
+        if filters.item_group:
+            conditions.append("`tabItem`.`item_group` = '{0}'".format(filters.item_group))
+                
     sql_query = """SELECT
         `tabBin`.`item_code` AS `item_code`, 
         `tabItem`.`item_name` AS `item_name`, 
@@ -65,7 +70,7 @@ def get_planning_data(filters, only_reorder=0):
         `tabBin`.`reserved_qty` AS `reserved_qty`,
         `tabBin`.`reserved_qty_for_production` AS `reserved_qty_for_production`,
         `tabBin`.`ordered_qty` AS `ordered_qty`,
-        `tabBin`.`ordered_qty` AS `indented_qty`,
+        `tabBin`.`indented_qty` AS `indented_qty`,
         `tabBin`.`projected_qty` AS `projected_qty`,
         `tabItem`.`safety_stock` AS `safety_stock`,
         (`tabBin`.`projected_qty` - `tabItem`.`safety_stock`) AS `projected_safety_qty`
