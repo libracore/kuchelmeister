@@ -1,0 +1,4 @@
+/* disable print button on print preview to force PDF */
+.btn-print-print {
+    display: none !important;
+}

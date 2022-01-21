@@ -16,6 +16,7 @@ app_license = "AGPL"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/kuchelmeister/css/kuchelmeister.css"
+app_include_css = "/assets/kuchelmeister/css/kuchelmeister.css"
 # app_include_js = "/assets/kuchelmeister/js/kuchelmeister.js"
 app_include_js = [
     "/assets/kuchelmeister/js/kuchelmeister_common.js"
