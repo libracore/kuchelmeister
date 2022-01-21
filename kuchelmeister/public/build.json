@@ -1,3 +1,5 @@
 {
-
+    "js/kuchelmeister_common.js": [
+        "public/js/kuchelmeister_common.js"
+    ]
 }
