@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PPSImport Version="1.1">
+ <DeleteProductionOrders>
+  {%- for order_code in order_codes %}
+  <DeleteProductionOrder OrderNo="{{ order_code }}" />
+  {%- endfor %}
+ </DeleteProductionOrders>
+</PPSImport>

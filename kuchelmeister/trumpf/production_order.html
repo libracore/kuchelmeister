@@ -1,4 +1,4 @@
-l<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <PPSImport Version="1.1">
  <ProductionOrders>
   {%- for item in items %}
@@ -15,7 +15,7 @@ l<?xml version="1.0" encoding="utf-8"?>
     {%- if item.drawing_no %}
     <DrawingNo>{{ item.drawing_no }}</DrawingNo>
     {%- endif %}
-    <DueDate>{{ delivery_date }}</DueDate>
+    <DueDate>{{ item.delivery_date }}</DueDate>
     <DesiredQuantity>{{ item.qty }}</DesiredQuantity>
     {%- if item.material %}
     <Material>{{ item.material }}</Material>
@@ -34,7 +34,7 @@ l<?xml version="1.0" encoding="utf-8"?>
             <SaveDocumentToArchive>False</SaveDocumentToArchive>
         </Document>
         {%- endfor %}
-    </DocumentsLinkedToPart>
+    </DocumentsLinkedToOrder>
     {%- endif %}
   </ProductionOrder>
   {%- endfor %}

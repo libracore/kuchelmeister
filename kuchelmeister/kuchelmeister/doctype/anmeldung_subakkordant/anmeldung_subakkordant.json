@@ -1,0 +1,201 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2020-01-07 21:36:57.841134",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "supplier",
+  "supplier_name",
+  "supplier_address",
+  "address_display",
+  "contact",
+  "contact_name",
+  "column_main",
+  "date",
+  "sales_order",
+  "stock_entry",
+  "naming_series",
+  "amended_from",
+  "section_items",
+  "items",
+  "section_free_text",
+  "text",
+  "section_delivery",
+  "delivery",
+  "delivery_date",
+  "column_delivery",
+  "return",
+  "return_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Anmeldung Subakkordant",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "section_items",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Anmeldung Subakkordant Item"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_free_text",
+   "fieldtype": "Section Break",
+   "label": "Text"
+  },
+  {
+   "fieldname": "text",
+   "fieldtype": "Text Editor",
+   "label": "Text"
+  },
+  {
+   "fieldname": "section_delivery",
+   "fieldtype": "Section Break",
+   "label": "Lieferung"
+  },
+  {
+   "fieldname": "delivery",
+   "fieldtype": "Select",
+   "label": "Anlieferung",
+   "options": "Anlieferung (durch uns)\nAbholung (durch Sie)\nPer Post"
+  },
+  {
+   "fieldname": "delivery_date",
+   "fieldtype": "Date",
+   "label": "Datum Anlieferung"
+  },
+  {
+   "fieldname": "column_delivery",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "return",
+   "fieldtype": "Select",
+   "label": "R\u00fccklieferung",
+   "options": "Abholung (durch uns)\nAnlieferung (durch Sie)\nPer Post"
+  },
+  {
+   "fieldname": "return_date",
+   "fieldtype": "Date",
+   "label": "Datum R\u00fccklieferung"
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "contact_name",
+   "fieldtype": "Data",
+   "label": "Contact name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry"
+  },
+  {
+   "default": "AM-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming series",
+   "options": "AM-.#####"
+  },
+  {
+   "fieldname": "supplier_address",
+   "fieldtype": "Link",
+   "label": "Supplier address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-01-07 22:28:34.373169",
+ "modified_by": "Administrator",
+ "module": "Kuchelmeister",
+ "name": "Anmeldung Subakkordant",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "supplier_name",
+ "track_changes": 1
+}

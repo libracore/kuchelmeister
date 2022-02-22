@@ -16,7 +16,11 @@ app_license = "AGPL"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/kuchelmeister/css/kuchelmeister.css"
+app_include_css = "/assets/kuchelmeister/css/kuchelmeister.css"
 # app_include_js = "/assets/kuchelmeister/js/kuchelmeister.js"
+app_include_js = [
+    "/assets/kuchelmeister/js/kuchelmeister_common.js"
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/kuchelmeister/css/kuchelmeister.css"
@@ -27,7 +31,17 @@ app_license = "AGPL"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+  "Supplier": "public/js/supplier.js",
+  "Sales Order": "public/js/sales_order.js",
+  "Stock Entry": "public/js/stock_entry.js",
+  "Customer": "public/js/customer.js",
+  "Quotation": "public/js/quotation.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+  "Customer" : "public/js/customer_list.js"
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -127,3 +141,10 @@ app_license = "AGPL"
 # 	"Task": "kuchelmeister.task.get_dashboard_data"
 # }
 
+# Additional Jinja functions
+jenv = {
+    "methods": [
+        "expand_so_bom:kuchelmeister.utils.jinja.expand_so_bom",
+        "get_so_materials:kuchelmeister.utils.jinja.get_so_materials"
+    ]
+}

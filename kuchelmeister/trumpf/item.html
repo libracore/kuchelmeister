@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PPSImport Version="1.1">
- <Items>
-  <Item IdentNo="{{ trumpf_item_code }}">
-    <IdentNoExt>{{ item_code }}</IdentNoExt>
+ <Parts>
+  <Part PartNo="{{ trumpf_item_code }}">
+    <PartNoExt>{{ item_code }}</PartNoExt>
     <Description>{{ description }}</Description>
+    {%- if drawing_no %}
+    <DrawingNo>{{ drawing_no }}</DrawingNo>
+    {%- endif %}
     <Category>{{ item_group }}</Category>
     {%- if material %}
     <Material>{{ material }}</Material>
     {%- endif %}
     <StockUnit>{{ default_uom }}</StockUnit>
+    {%- if cad_file_name %}
+    <CADFilename>{{ cad_file_name }}</CADFilename>
+    {%- endif %}
+    <IsAutoRemoveable>0</IsAutoRemoveable>
     {%- if documents %}
     <DocumentsLinkedToPart>
         {%- for document in documents %}
-        <Document>
-            <Path>{{ document.url }}</Path>
+        <Document Path="{{ document.url }}">
             <Title>{{ document.filename }}</Title>
             <Description>{{ document.filename }}</Description>
             <Version>1.0</Version>
@@ -45,6 +51,23 @@
         {%- endfor %}
     </PriceLists>
     {%- endif %}
-  </Item>
- </Items>
+    {%- if bom_parts and bom_parts|len > 0 %}
+    <WorkingPlan>
+        <WorkingStep OperationNo="10">
+          <Activity>Assembling</Activity>
+          <WorkPlace>Assembling</WorkPlace>
+          <Resources>
+            {%- for bom_part in bom_parts %}
+            <Resource>
+              <ArticleNo>{{ bom_part.part_no }}</ArticleNo>
+              <Quantity>{{ bom_part.qty }}</Quantity>
+              <UnitOfQuantity>{{ bom_part.uom }}</UnitOfQuantity>
+            </Resource>
+            {%- endfor %}
+          </Resources>
+        </WorkingStep>
+      </WorkingPlan>
+    {%- endif %}
+  </Part>
+ </Parts>
 </PPSImport>

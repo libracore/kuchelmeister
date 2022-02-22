@@ -1,0 +1,251 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2020-04-15 16:08:00.204597",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "customer",
+  "customer_name",
+  "allgemeine_nummer",
+  "homepage",
+  "contact",
+  "contact_person",
+  "funktion",
+  "telefon",
+  "mobile_no",
+  "email",
+  "column_main",
+  "klassifizierung",
+  "status",
+  "grobeinteilung",
+  "branche",
+  "naehere_umschreibung",
+  "section_activity",
+  "jahr",
+  "kw",
+  "verantwortlich",
+  "column_activity",
+  "aufgabe",
+  "opportunity",
+  "prevdoc_docname",
+  "prio",
+  "erledigt",
+  "section_notes",
+  "notizen"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.klassifizierung",
+   "fieldname": "klassifizierung",
+   "fieldtype": "Link",
+   "label": "Klassifizierung",
+   "options": "Klassifizierung",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.status",
+   "fieldname": "status",
+   "fieldtype": "Link",
+   "label": "Status",
+   "options": "Status",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.grobeinteilung",
+   "fieldname": "grobeinteilung",
+   "fieldtype": "Link",
+   "label": "Grobeinteilung",
+   "options": "Grobeinteilung",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.branche",
+   "fieldname": "branche",
+   "fieldtype": "Link",
+   "label": "Branche",
+   "options": "Branche",
+   "read_only": 1
+  },
+  {
+   "fieldname": "telefon",
+   "fieldtype": "Data",
+   "label": "Telefon",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_activity",
+   "fieldtype": "Section Break",
+   "label": "Aktivit\u00e4t"
+  },
+  {
+   "fieldname": "kw",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "KW"
+  },
+  {
+   "fieldname": "column_activity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Kontaktperson",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "jahr",
+   "fieldtype": "Int",
+   "label": "Jahr"
+  },
+  {
+   "fieldname": "verantwortlich",
+   "fieldtype": "Link",
+   "label": "Verantwortlich",
+   "options": "User"
+  },
+  {
+   "default": "0",
+   "fieldname": "erledigt",
+   "fieldtype": "Check",
+   "label": "Erledigt"
+  },
+  {
+   "fieldname": "aufgabe",
+   "fieldtype": "Long Text",
+   "in_standard_filter": 1,
+   "label": "Aufgabe"
+  },
+  {
+   "fieldname": "section_notes",
+   "fieldtype": "Section Break",
+   "label": "Notizen"
+  },
+  {
+   "fetch_from": "customer.customer_details",
+   "fetch_if_empty": 1,
+   "fieldname": "notizen",
+   "fieldtype": "Long Text",
+   "label": "Notizen"
+  },
+  {
+   "fieldname": "allgemeine_nummer",
+   "fieldtype": "Data",
+   "label": "Allgemeine Nummer",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.naehere_umschreibung",
+   "fieldname": "naehere_umschreibung",
+   "fieldtype": "Small Text",
+   "label": "N\u00e4here Umschreibung",
+   "read_only": 1
+  },
+  {
+   "default": "AT-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming series",
+   "options": "AT-.#####"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Data",
+   "label": "Name Kontaktperson",
+   "read_only": 1
+  },
+  {
+   "default": "Mittel",
+   "fieldname": "prio",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Priorit\u00e4t",
+   "options": "Hoch\nMittel\nTief"
+  },
+  {
+   "fetch_from": "customer.website",
+   "fieldname": "homepage",
+   "fieldtype": "Data",
+   "label": "Homepage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "funktion",
+   "fieldtype": "Data",
+   "label": "Funktion",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile",
+   "read_only": 1
+  },
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity"
+  },
+  {
+   "fieldname": "prevdoc_docname",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "prevdoc_docname",
+   "options": "Opportunity"
+  }
+ ],
+ "modified": "2020-05-29 14:25:48.794800",
+ "modified_by": "Administrator",
+ "module": "Kuchelmeister",
+ "name": "Aktivitaet",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "customer_name",
+ "track_changes": 1
+}

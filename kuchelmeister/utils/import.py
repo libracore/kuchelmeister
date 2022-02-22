@@ -242,3 +242,77 @@ def update_items(f):
           counter += 1
     print("Done with {0} items".format(counter))
     return
+
+# update customers
+def update_customers(f):
+    # read item csv file
+    CUSTOMER = 0
+    CUSTOMER_NAME = 1
+    STREET = 2
+    CITY = 3
+    PINCODE = 4
+    PHONE = 5
+    # read csv file
+    counter = 0
+    with open(f) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';', quotechar='"')
+        for row in csv_reader:
+          print(row)
+          if counter > 0:
+            customer = "K-{0:05d}".format(int(row[CUSTOMER].strip()))
+            customer_name = row[CUSTOMER_NAME].strip()
+            description = "{0}, {1} {2}, {3}".format(row[STREET], row[PINCODE], row[CITY], row[PHONE])
+
+            if not frappe.db.exists("Customer", customer):
+                # create customer
+                new_customer = frappe.get_doc({
+                    'doctype': 'Customer',
+                    'name': customer,
+                    'customer_details': customer,
+                    'customer_name': customer_name,
+                    'customer_group': 'Alle Kundengruppen',
+                    'territory': 'CH',
+                    'type': 'Company',
+                    'naming-series': 'K-.#####'
+                })
+                new_customer.insert()
+                frappe.db.commit()
+                print("Inserted {0}".format(customer))
+            else:
+                print("Skipping {0}".format(customer))
+          counter += 1
+    print("Done with {0} customers".format(counter))
+    return
+
+# update item weights
+def update_item_weights(f):
+    # read item csv file
+    ITEM = 0
+    WEIGHT = 1
+    # read csv file
+    counter = 0
+    with open(f) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';', quotechar='"')
+        for row in csv_reader:
+          print(row)
+          if counter > 0:
+            item_code = row[ITEM].strip()
+
+            if frappe.db.exists("Item", item_code):
+                # create customer
+                item = frappe.get_doc("Item", item_code)
+                weight = 0.0
+                try:
+                    weight = float(row[WEIGHT])
+                except:
+                    weight = 0.0
+                item.weight = weight
+                item.save()
+                frappe.db.commit()
+                print("Updated {0}".format(item_code))
+            else:
+                print("Skipping {0} (does not exist)".format(item_code))
+          counter += 1
+    print("Done with {0} items".format(counter))
+    return
+

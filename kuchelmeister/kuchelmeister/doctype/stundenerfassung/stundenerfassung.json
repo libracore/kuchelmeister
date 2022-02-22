@@ -1,0 +1,137 @@
+{
+ "allow_import": 1,
+ "creation": "2020-02-19 15:56:23.661998",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "von_datum",
+  "column_date",
+  "bis_datum",
+  "section_hours",
+  "ist_stunden",
+  "soll_stunden",
+  "ferien_stunden",
+  "column_hours",
+  "krank_stunden",
+  "wb_stunden",
+  "mil_stunden",
+  "kz_stunden",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "von_datum",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Von Datum",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_date",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bis_datum",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Bis Datum",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_hours",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "soll_stunden",
+   "fieldtype": "Float",
+   "label": "Soll-Stunden"
+  },
+  {
+   "fieldname": "ist_stunden",
+   "fieldtype": "Float",
+   "label": "Ist-Stunden"
+  },
+  {
+   "fieldname": "krank_stunden",
+   "fieldtype": "Float",
+   "label": "Krank-Stunden"
+  },
+  {
+   "fieldname": "ferien_stunden",
+   "fieldtype": "Float",
+   "label": "Ferien-Stunden"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Stundenerfassung",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_hours",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wb_stunden",
+   "fieldtype": "Float",
+   "label": "Weiterbildungs-Stunden"
+  },
+  {
+   "fieldname": "mil_stunden",
+   "fieldtype": "Float",
+   "label": "Milit\u00e4r-Stunden"
+  },
+  {
+   "fieldname": "kz_stunden",
+   "fieldtype": "Float",
+   "label": "Kurzzeit-Stunden"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-05-11 19:43:51.866003",
+ "modified_by": "Administrator",
+ "module": "Kuchelmeister",
+ "name": "Stundenerfassung",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "von_datum",
+ "track_changes": 1
+}

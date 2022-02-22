@@ -2,3 +2,12 @@ Module: Kuchelmeister,Open in Trumpf FAB,In Trumpf FAB eröffnen
 DocType: Item,Trumpf FAB opened,Eröffnet in Trumpf FAB
 DocType: Item,Used to mark items that are opened in Trumpf FAB,Wir verwendet um Artikel zu markieren die in Trumpf FAB eröffnet wurden.
 DocType: Item,Drawing No,Zeichnungsnummer
+DocType: Item,Open in Trumpf FAB,In Trumpf FAB eröffnen
+DocType: Item,Item created in Trumpf FAB,Artikel in Trumpf FAB erstellt
+DocType: Sales Order,Check Trumpf FAB,Trumpf FAB prüfen
+DocType: Kundenbesuch,Other,Weitere
+DocType: Non Conformity Report 8D,Intern,Intern
+Report: Production Planning,Only reorder,Nur Fehlmengen
+Report: Production Planning,Hide no transactions,Ohne Transaktionen ausblenden
+Report: Production Planning,Has safety stock,Mit Sicherheitsbestand
+Report: Production Planning,Production Planning,Bedarfsplanung

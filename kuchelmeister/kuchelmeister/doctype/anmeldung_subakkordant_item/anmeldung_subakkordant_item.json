@@ -1,0 +1,87 @@
+{
+ "creation": "2020-01-07 21:34:52.568751",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "stock_uom",
+  "material",
+  "drawing_no",
+  "column_qty",
+  "qty",
+  "section_description",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_qty",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "section_description",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "item.stock_uom",
+   "fieldname": "stock_uom",
+   "fieldtype": "Data",
+   "label": "SKU",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.material",
+   "fieldname": "material",
+   "fieldtype": "Data",
+   "label": "Material",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.drawing_no",
+   "fieldname": "drawing_no",
+   "fieldtype": "Data",
+   "label": "Drawing no",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-01-07 22:12:32.924548",
+ "modified_by": "Administrator",
+ "module": "Kuchelmeister",
+ "name": "Anmeldung Subakkordant Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
