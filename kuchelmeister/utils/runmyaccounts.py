@@ -61,6 +61,47 @@ def post_customer(customer_data):
     # log
     log_transfer(function="post_customer", payload=customer_data, response=r.text, status=r.status_code)
     return
+
+# create invoice
+@frappe.whitelist()
+def create_invoice(sales_invoice):
+    sinv_doc = frappe.get_doc("Sales Invoice", sales_invoice)
+    
+    # prepare data structure (see https://www.runmyaccounts.ch/support-artikel/customer-entity/)
+    data = {
+        "invnumber": sinv_doc.name,
+        "status": sinv_doc.status,
+        "transdate": sinv_doc.posting_date.strftime("%Y-%m-%dT%H:%M:%S"),
+        "duedate": sinv_doc.due_date.strftime("%Y-%m-%dT%H:%M:%S"),
+        "currency": sinv_doc.currency,
+        "ar_accno": sinv_doc.debit_to[:4],
+        "notes": sinv_doc.terms,
+        "taxincluded": "false",
+        "customer": {
+            "id": sinv_doc.customer,
+            "customernumber": sinv_doc.customer,
+            "name": sinv_doc.customer_name
+        }
+    }
+    
+        
+    # post the record
+    post_sales_invoice(data)
+    
+    return
+
+# this function will write the sales invoice to the API
+def post_sales_invoice(sinv_data):
+    # read config
+    config = frappe.get_doc("RunMyAccounts Settings", "RunMyAccounts Settings")
+    # set enpoint
+    endpoint = "https://service.runmyaccounts.com/api/latest/clients/{mandant}/invoices?api_key={api_key}".format(
+        mandant=config.mandant, api_key=config.api_key)
+    # post data
+    r = requests.post(endpoint, data=sinv_data)
+    # log
+    log_transfer(function="post_sales_invoice", payload=sinv_data, response=r.text, status=r.status_code)
+    return
     
 def log_transfer(function, payload, response, status):
     log = frappe.get_doc({
