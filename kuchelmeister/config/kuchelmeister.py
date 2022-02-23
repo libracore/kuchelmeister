@@ -251,5 +251,23 @@ def get_data():
                     "is_query_report": True
                 }
             ]
+        },
+        {
+            "label": _("RunMyAccounts"),
+            "icon": "octicon oction-book",
+            "items": [
+                {
+                       "type": "doctype",
+                       "name": "RunMyAccounts Settings",
+                       "label": _("RunMyAccounts Settings"),
+                       "description": _("RunMyAccounts Settings")
+                },
+                {
+                       "type": "doctype",
+                       "name": "RunMyAccounts Log",
+                       "label": _("RunMyAccounts Log"),
+                       "description": _("RunMyAccounts Log")
+                }
+            ]
         }
 ]
