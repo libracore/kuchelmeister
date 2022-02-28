@@ -36,8 +36,7 @@ doctype_js = {
   "Sales Order": "public/js/sales_order.js",
   "Stock Entry": "public/js/stock_entry.js",
   "Customer": "public/js/customer.js",
-  "Quotation": "public/js/quotation.js",
-  "Sales Invoice": "public/js/sales_invoice.js"
+  "Quotation": "public/js/quotation.js"
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 doctype_list_js = {
@@ -94,13 +93,15 @@ doctype_list_js = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+    "Customer": {
+        "after_insert": "kuchelmeister.utils.runmyaccounts.create_customer_hook",
+        "validate": "kuchelmeister.utils.runmyaccounts.create_customer_hook"
+    },
+    "Sales Invoice": {
+        "on_submit": "kuchelmeister.utils.runmyaccounts.submit_sales_invoice_hook"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
