@@ -10,6 +10,9 @@ import json
 from datetime import datetime, timedelta
 from frappe.utils import cint
 
+TEST_HOST = "https://service.int.runmyaccounts.com"
+LIVE_HOST = "https://service.runmyaccounts.com"
+
 # create customer
 @frappe.whitelist()
 def create_customer(customer, debug=False):
@@ -62,8 +65,12 @@ def post_customer(customer_data, debug=False):
     # read config
     config = frappe.get_doc("RunMyAccounts Settings", "RunMyAccounts Settings")
     # set enpoint
-    endpoint = "https://service.int.runmyaccounts.com/api/latest/clients/{mandant}/customers".format(
-        mandant=config.mandant, api_key=config.api_key)
+    if cint(config.test_env) == 1:
+        host = TEST_HOST
+    else:
+        host = LIVE_HOST
+    endpoint = "{host}/api/latest/clients/{mandant}/customers".format(
+        host=host, mandant=config.mandant, api_key=config.api_key)
     if debug:
         print("Endpoint: {0}".format(endpoint))
     headers = {
@@ -152,8 +159,12 @@ def post_sales_invoice(sinv_data, debug=False):
     # read config
     config = frappe.get_doc("RunMyAccounts Settings", "RunMyAccounts Settings")
     # set enpoint
-    endpoint = "https://service.int.runmyaccounts.com/api/latest/clients/{mandant}/invoices".format(
-        mandant=config.mandant, api_key=config.api_key)
+    if cint(config.test_env) == 1:
+        host = TEST_HOST
+    else:
+        host = LIVE_HOST
+    endpoint = "{host}/api/latest/clients/{mandant}/invoices".format(
+        host=host, mandant=config.mandant, api_key=config.api_key)
     if debug:
         print("Endpoint: {0}".format(endpoint))
     headers = {
@@ -191,6 +202,33 @@ def submit_sales_invoice_hook(sales_invoice, method):
     return
 
 # migration patterns
+def prepare_customers():
+    # this function will set the primary address field for the customer if empty
+    from erpnextswiss.scripts.crm_tools import get_primary_customer_address, get_primary_customer_contact
+    all_customers = frappe.get_all("Customer", filters={'disabled': 0}, fields=['name', 'customer_primary_address', 'customer_primary_contact'])
+    
+    for customer in all_customers:
+        if customer['customer_primary_address']:
+            print("Skipping {0} address...".format(customer['name']))
+        else:
+            address = get_primary_customer_address(customer['name'])
+            if address:
+                doc = frappe.get_doc("Customer", customer['name'])
+                doc.customer_primary_address = address.name
+                doc.save()
+                print("Updated {0} address".format(customer['name']))
+        
+        if customer['customer_primary_contact']:
+            print("Skipping {0} contact...".format(customer['name']))
+        else:
+            contact = get_primary_customer_contact(customer['name'])
+            if contact:
+                doc = frappe.get_doc("Customer", customer['name'])
+                doc.customer_primary_contact = contact.name
+                doc.save()
+                print("Updated {0} contact".format(customer['name']))
+    return
+    
 def send_all_customers():
     all_customers = frappe.get_all("Customer", filters={'disabled': 0}, fields=['name'])
     
