@@ -96,6 +96,7 @@ def create_invoice(sales_invoice, debug=False):
     # prepare data structure (see https://www.runmyaccounts.ch/support-artikel/customer-entity/)
     data = {
         "invnumber": sinv_doc.name,
+        "ordnumber": sinv_doc.items[0].sales_order or "",
         "status": sinv_doc.status,
         "transdate": sinv_doc.posting_date.strftime("%Y-%m-%dT%H:%M:%S"),
         "duedate": sinv_doc.due_date.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -113,14 +114,25 @@ def create_invoice(sales_invoice, debug=False):
     }
     
     # add item positions
-    for item in sinv_doc.items:
+    if cint(frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "single_item")) == 1:
+        # this is a hack because the items interface at RunMyAccounts is broken and will only import the last item
         data["incomeentries"].append({
-            "incomeentry": {
-                "amount": item.amount,
-                "income_accno": item.income_account[:4],
-                "description": item.item_code
-            }
-        })
+                "incomeentry": {
+                    "amount": sinv_doc.net_total,
+                    "income_accno": sinv_doc.items[0].income_account[:4],
+                    "description": "Sammelposition"
+                }
+            })
+    else:
+        # this is technically correct
+        for item in sinv_doc.items:
+            data["incomeentries"].append({
+                "incomeentry": {
+                    "amount": item.amount,
+                    "income_accno": item.income_account[:4],
+                    "description": item.item_code
+                }
+            })
     
     # add tax entries
     for tax in sinv_doc.taxes:

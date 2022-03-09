@@ -7,6 +7,7 @@
   "enabled",
   "column_main",
   "test_env",
+  "single_item",
   "section_connection",
   "mandant",
   "column_conenction",
@@ -47,10 +48,16 @@
    "fieldname": "test_env",
    "fieldtype": "Check",
    "label": "Test environment"
+  },
+  {
+   "default": "1",
+   "fieldname": "single_item",
+   "fieldtype": "Check",
+   "label": "Combine items to one line"
   }
  ],
  "issingle": 1,
- "modified": "2022-03-01 22:34:05.648357",
+ "modified": "2022-03-09 21:18:50.523936",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "RunMyAccounts Settings",
