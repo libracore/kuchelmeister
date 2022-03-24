@@ -162,10 +162,51 @@ def create_invoice(sales_invoice, debug=False):
         data["customer"]["country"] = address.country
         
     # post the record
-    post_sales_invoice(data, debug)
+    status = post_sales_invoice(data, debug)
     
+    # close invoice in ERP
+    if cint(frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "close_invoice_automatically")) == 1: # and status == 204
+        create_payment_entry(
+            customer=sinv_doc.customer,
+            date=datetime.now(), 
+            to_account=frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "invoice_account"), 
+            received_amount=sinv_doc.outstanding_amount, 
+            reference=sinv_doc.name, 
+            remarks="Auto RunMyAccounts", 
+            auto_submit=True
+        )
+        
     return
 
+# create a payment entry
+def create_payment_entry(customer, date, to_account, received_amount, reference, remarks, auto_submit=False):
+    # create new payment entry
+    new_payment_entry = frappe.get_doc({
+        'doctype': 'Payment Entry',
+        'payment_type': "Receive",
+        'party_type': "Customer",
+        'party': customer,
+        'posting_date': date,
+        'paid_to': to_account,
+        'received_amount': received_amount,
+        'paid_amount': received_amount,
+        'reference_no': reference,
+        'reference_date': date,
+        'remarks': remarks,
+        'references': [{
+            'reference_doctype': "Sales Invoice",
+            'reference_name': reference,
+            'outstanding_amount': received_amount,
+            'allocated_amount': received_amount
+        }]
+    })
+
+    inserted_payment_entry = new_payment_entry.insert()
+    if auto_submit:
+        new_payment_entry.submit()
+    frappe.db.commit()
+    return inserted_payment_entry
+        
 # this function will write the sales invoice to the API
 def post_sales_invoice(sinv_data, debug=False):
     # read config
@@ -188,7 +229,7 @@ def post_sales_invoice(sinv_data, debug=False):
     r = requests.post(endpoint, data=data, headers=headers)
     # log
     log_transfer(function="post_sales_invoice", payload=data, response=r.text, status=r.status_code)
-    return
+    return r.status_code
     
 def log_transfer(function, payload, response, status):
     log = frappe.get_doc({

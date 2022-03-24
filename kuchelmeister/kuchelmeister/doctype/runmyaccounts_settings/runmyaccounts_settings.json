@@ -11,7 +11,11 @@
   "section_connection",
   "mandant",
   "column_conenction",
-  "api_key"
+  "api_key",
+  "section_accounting",
+  "close_invoice_automatically",
+  "column_accounting",
+  "invoice_account"
  ],
  "fields": [
   {
@@ -54,10 +58,32 @@
    "fieldname": "single_item",
    "fieldtype": "Check",
    "label": "Combine items to one line"
+  },
+  {
+   "fieldname": "section_accounting",
+   "fieldtype": "Section Break",
+   "label": "Accounting"
+  },
+  {
+   "depends_on": "close_invoice_automatically",
+   "fieldname": "invoice_account",
+   "fieldtype": "Link",
+   "label": "Close invoices against account",
+   "options": "Account"
+  },
+  {
+   "default": "0",
+   "fieldname": "close_invoice_automatically",
+   "fieldtype": "Check",
+   "label": "Close invoice automatically"
+  },
+  {
+   "fieldname": "column_accounting",
+   "fieldtype": "Column Break"
   }
  ],
  "issingle": 1,
- "modified": "2022-03-09 21:18:50.523936",
+ "modified": "2022-03-24 09:20:40.442796",
  "modified_by": "Administrator",
  "module": "Kuchelmeister",
  "name": "RunMyAccounts Settings",
