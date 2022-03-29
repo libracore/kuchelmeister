@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoice>
+   <invnumber>{{ invnumber }}</invnumber>
+   <ordnumber>{{ ordnumber }}</ordnumber>
+   <status>{{ status }}</status>
+   <currency>{{ currency }}</currency>
+   <ar_accno>{{ ar_accno }}</ar_accno>
+   <transdate>{{ transdate }}</transdate>
+   <duedate>{{ duedate }}</duedate>
+   <description />
+   <notes>{{ notes }}</notes>
+   <intnotes />
+   <taxincluded>{{ taxincluded }}</taxincluded>
+   <dcn />
+   <customernumber>{{ customer["customernumber"] }}</customernumber>
+   <parts>
+        {%- for p in parts -%}
+        <part>
+            <partnumber>{{ p["part"]["partnumber"] }}</partnumber>
+            <description>{{ p["part"]["description"] }}</description>
+            <unit>{{ p["part"]["unit"] }}</unit>
+            <quantity>{{ p["part"]["quantity"] }}</quantity>
+            <sellprice>{{ p["part"]["sellprice"] }}</sellprice>
+            <discount>0.0</discount>
+            <itemnote />
+            <price_update>{{ transdate }}</price_update>
+        </part>
+        {%- endfor -%}
+   </parts>
+</invoice>

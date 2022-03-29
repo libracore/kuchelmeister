@@ -108,11 +108,12 @@ def create_invoice(sales_invoice, debug=False):
             "id": sinv_doc.customer,
             "customernumber": sinv_doc.customer,
             "name": sinv_doc.customer_name
-        },
-        "incomeentries": [],
-        "taxentries": []
+        }
     }
     
+    """ disabled accounting interface version
+    data["incomeentries"] = []
+    data["taxentries"] = []
     # add item positions
     if cint(frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "single_item")) == 1:
         # this is a hack because the items interface at RunMyAccounts is broken and will only import the last item
@@ -142,7 +143,61 @@ def create_invoice(sales_invoice, debug=False):
                 "tax_accno": tax.account_head[:4]
             }
         })
+    """
     
+    # use part-base interface
+    data["parts"] = []
+    if cint(frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "single_item")) == 1:
+        if "302" in sinv_doc.taxes_and_charges:
+            # local
+            item = "3000"
+        else:
+            # export
+            item = "3001"
+        data["parts"].append({
+                    "part": {
+                        "partnumber": item,
+                        "description": "Sammelposition",
+                        "quantity": 1,
+                        "sellprice": sinv_doc.net_total
+                    }
+                })
+    else:
+        for i in sinv_doc.items:
+            # retrofit: this is a custom-built retrofit to match RunMyAccounts items, otherwise taxation does not work
+            if "302" in sinv_doc.taxes_and_charges:
+                # local
+                if "AA-LIEF" in i.item_code:
+                    item = "3401"
+                else:
+                    item = "3000"
+            else:
+                # export
+                if "AA-LIEF" in i.item_code:
+                    item = "3402"
+                else:
+                    item = "3001"
+            data["parts"].append({
+                    "part": {
+                        "partnumber": item,
+                        "description": i.item_name,
+                        "quantity": i.qty,
+                        "sellprice": i.rate,
+                        "unit": i.uom
+                    }
+                })
+            
+        # this would be the correct way
+        """data["parts"].append({
+                "part": {
+                    "partnumber": i.item_code,
+                    "description": i.item_name,
+                    "quantity": i.qty,
+                    "sellprice": i.rate
+                }
+            })
+        """
+            
     if sinv_doc.contact_person:
         contact = frappe.get_doc("Contact", sinv_doc.contact_person)
         data["customer"]["salutation"] = contact.salutation
@@ -161,8 +216,14 @@ def create_invoice(sales_invoice, debug=False):
         data["customer"]["state"] = address.state
         data["customer"]["country"] = address.country
         
-    # post the record
+    # post the record (json)
     status = post_sales_invoice(data, debug)
+
+    # retrofit to xml
+    """
+    xml = frappe.render_template("/templates/includes/rma_invoice.html", data)
+    status = post_sales_invoice_soap(xml, debug)
+    """
     
     # close invoice in ERP
     if cint(frappe.get_value("RunMyAccounts Settings", "RunMyAccounts Settings", "close_invoice_automatically")) == 1: # and status == 204
@@ -229,6 +290,31 @@ def post_sales_invoice(sinv_data, debug=False):
     r = requests.post(endpoint, data=data, headers=headers)
     # log
     log_transfer(function="post_sales_invoice", payload=data, response=r.text, status=r.status_code)
+    return r.status_code
+
+# this function will write the sales invoice to the API
+def post_sales_invoice_soap(sinv_data, debug=False):
+    # read config
+    config = frappe.get_doc("RunMyAccounts Settings", "RunMyAccounts Settings")
+    # set enpoint
+    if cint(config.test_env) == 1:
+        host = TEST_HOST
+    else:
+        host = LIVE_HOST
+    endpoint = "{host}/api/latest/clients/{mandant}/invoices".format(
+        host=host, mandant=config.mandant, api_key=config.api_key)
+    if debug:
+        print("Endpoint: {0}".format(endpoint))
+    headers = {
+        'X-RMA-KEY': config.api_key,
+        'Content-Type': 'application/xml',
+        'Host': host.split("//")[-1],
+        'Content-Length': str(len(sinv_data))
+    }
+    # post data
+    r = requests.post(endpoint, data=sinv_data, headers=headers)
+    # log
+    log_transfer(function="post_sales_invoice_soap", payload=sinv_data, response=r.text, status=r.status_code)
     return r.status_code
     
 def log_transfer(function, payload, response, status):
