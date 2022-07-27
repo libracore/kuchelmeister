@@ -93,7 +93,7 @@ def create_invoice(sales_invoice, debug=False):
         
     sinv_doc = frappe.get_doc("Sales Invoice", sales_invoice)
     
-    # prepare data structure (see https://www.runmyaccounts.ch/support-artikel/customer-entity/)
+    # prepare data structure (see https://www.runmyaccounts.ch/support-artikel/invoice-entity/)
     data = {
         "invnumber": sinv_doc.name,
         "ordnumber": sinv_doc.items[0].sales_order or "",
@@ -110,6 +110,9 @@ def create_invoice(sales_invoice, debug=False):
             "name": sinv_doc.customer_name
         }
     }
+    
+    if sinv_doc.esr_reference:
+        data["dcn"] = sinv_doc.esr_reference
     
     """ disabled accounting interface version
     data["incomeentries"] = []
