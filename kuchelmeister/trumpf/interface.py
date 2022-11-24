@@ -53,7 +53,7 @@ def write_item(item_code):
     data = {
         'item_code': cgi.escape(item_code[:50]),
         'trumpf_item_code': trumpf_item_code,
-        'description': cgi.escape(short_description),
+        'description': cgi.escape(item.item_name),
         'drawing_no': cgi.escape(drawing_no),
         'item_group': cgi.escape(item.item_group),
         'material': material,
