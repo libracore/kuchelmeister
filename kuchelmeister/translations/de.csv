@@ -11,3 +11,8 @@ Report: Production Planning,Only reorder,Nur Fehlmengen
 Report: Production Planning,Hide no transactions,Ohne Transaktionen ausblenden
 Report: Production Planning,Has safety stock,Mit Sicherheitsbestand
 Report: Production Planning,Production Planning,Bedarfsplanung
+DocType: RunMyAccounts Settings,RunMyAccounts Settings,RunMyAccounts Einstellungen
+DocType: RunMyAccounts Settings,Test environment,Testumgebung
+DocType: RunMyAccounts Settings,Combine items to one line,Artikel in eine Zeile zusammenziehen
+DocType: RunMyAccounts Settings,Close invoice automatically,Rechnungen automatisch schliessen
+DocType: RunMyAccounts Settings,Close invoices against account,Rechnungen gegen diese Konto schliessen

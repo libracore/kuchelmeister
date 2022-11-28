@@ -69,7 +69,7 @@ def write_item(item_code, hashname=False):
     data = {
         'item_code': cgi.escape(item_code[:50]),
         'trumpf_item_code': trumpf_item_code,
-        'description': cgi.escape(short_description),
+        'description': cgi.escape(item.item_name),
         'drawing_no': cgi.escape(drawing_no) if drawing_no else None,
         'item_group': cgi.escape(item.item_group),
         'oseon_group': cgi.escape(oseon_group),
