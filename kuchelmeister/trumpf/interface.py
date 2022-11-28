@@ -9,17 +9,33 @@ import cgi              # for xml escaping
 import hashlib          # for md5 hashes
 import os               # for file handling
 from frappe.desk.form.load import get_attachments
-from frappe.utils import get_url
+from frappe.utils import get_url, cint
 from bs4 import BeautifulSoup    # xml parser
 from datetime import date
+from frappe import _
 
 @frappe.whitelist()
-def write_item(item_code):
+def write_item(item_code, hashname=False):
     item = frappe.get_doc("Item", item_code)
     settings = frappe.get_doc("Trumpf Settings")
     target_path = settings.physical_path
-    # create a unique item code, limited to 21 characters based on md5 hash
-    trumpf_item_code = hashlib.md5(item_code.encode('utf-8')).hexdigest()[:21]
+    if hashname:
+        # create a unique item code, limited to 21 characters based on md5 hash
+        trumpf_item_code = hashlib.md5(item_code.encode('utf-8')).hexdigest()[:21]
+    else:
+        # create OSEON number
+        if item.item_group == "C-Teile":
+            if len(item.item_code) > 21:
+                frappe.throw( _("Invalid item code: exceeds OSEON limit of 21 characters"), _("Validation") )
+            trumpf_item_code = item.item_code
+        else:
+            trumpf_item_code = get_next_oseon_code()
+    # OSEON group code
+    if item.item_group == "C-Teile":
+        oseon_group = "SL"
+    else:
+        oseon_group = "TL"
+            
     if item.material:
         material = cgi.escape(item.material)
     else:
@@ -54,8 +70,9 @@ def write_item(item_code):
         'item_code': cgi.escape(item_code[:50]),
         'trumpf_item_code': trumpf_item_code,
         'description': cgi.escape(short_description),
-        'drawing_no': cgi.escape(drawing_no),
+        'drawing_no': cgi.escape(drawing_no) if drawing_no else None,
         'item_group': cgi.escape(item.item_group),
+        'oseon_group': cgi.escape(oseon_group),
         'material': material,
         'default_uom': item.stock_uom,
         'documents': documents,
@@ -86,9 +103,9 @@ def write_item(item_code):
     # update item
     item.trumpf_fab_opened = 1                  # mark as exported
     item.trumpf_item_code = trumpf_item_code    # store Trumpf item code
-    item.save()
+    item.save(ignore_permissions=True)
     # add log
-    add_log(title="Item sent to FAB", message="Item: {item_code}".format(item_code=item_code))
+    add_log(title="Item sent to FAB", message="Item: {item_code} ({oseon})".format(item_code=item_code, oseon=trumpf_item_code))
     return
 
 @frappe.whitelist()
@@ -296,3 +313,27 @@ def add_log(title, message):
     l.insert()
     frappe.db.commit()
     return
+
+def get_next_oseon_code():
+    last_item = frappe.db.sql("""
+        SELECT MAX(`trumpf_item_code`) AS `code`
+        FROM `tabItem`
+        WHERE `trumpf_item_code` LIKE "OSEON-%";""", as_dict=True)
+          
+    if last_item and len(last_item) > 0 and last_item[0]['code']:
+        return "OSEON-{0}".format((cint(last_item[0]['code'][6:]) + 1))
+    else:
+        return "OSEON-10000000"
+
+@frappe.whitelist()
+def get_next_c_code():
+    last_item = frappe.db.sql("""
+        SELECT MAX(`item_code`) AS `code`
+        FROM `tabItem`
+        WHERE LENGTH(`item_code`) = 5
+          AND SUBSTRING(`item_code`, 1, 1) IN ("1", "2", "3", "4", "5", "6", "7", "8", "9");""", as_dict=True)
+          
+    if last_item and len(last_item) > 0:
+        return (cint(last_item[0]['code']) + 1)
+    else:
+        return 10000

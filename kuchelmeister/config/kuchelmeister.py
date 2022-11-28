@@ -7,12 +7,18 @@ def get_data():
             "label": _("Trumpf"),
             "icon": "octicon oction-code",
             "items": [
-                   {
-                       "type": "doctype",
-                       "name": "Trumpf Settings",
-                       "label": _("Trumpf Settings"),
-                       "description": _("Trumpf Settings")
-                   }
+                    {
+                        "type": "doctype",
+                        "name": "Trumpf Settings",
+                        "label": _("Trumpf Settings"),
+                        "description": _("Trumpf Settings")
+                    },
+                    {
+                        "type": "doctype",
+                        "name": "Trumpf Log",
+                        "label": _("Trumpf Log"),
+                        "description": _("Trumpf Log")
+                    }
             ]
         },
         {
