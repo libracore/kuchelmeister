@@ -60,7 +60,7 @@ def write_item(item_code, hashname=False):
     else:
         documents = None
     # prepare description: no html, only 50 characters
-    soup = BeautifulSoup(item.description)
+    soup = BeautifulSoup(item.description, 'lxml')
     short_description = soup.get_text()[:50]
     if item.drawing_no:
         drawing_no = cgi.escape(item.drawing_no)
